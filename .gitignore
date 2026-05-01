@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# 临时文件
+*.md.bak
+.DS_Store
+Thumbs.db
+
+# 大文件（可选，根据需要添加）
+*.xlsx
+*.xls
+*.pdf
