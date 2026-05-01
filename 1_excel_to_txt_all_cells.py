@@ -129,10 +129,14 @@ def extract_excel_to_txt(
     return lines_written
 
 
+BASE_DIR = Path(__file__).resolve().parent
 EXCEL_SUFFIXES = {".xlsx", ".xls", ".xlsm", ".xlsb"}
-OUTPUT_DIR = Path(__file__).resolve().parent / "提取文本"
-MERGE_DIR = Path(__file__).resolve().parent / "提取文件合并文件"
-TRANSLATION_JSON_PATH = Path(__file__).resolve().parent / "翻译对照.json"
+OUTPUT_DIR = BASE_DIR / "1_提取文本"
+MERGE_DIR = BASE_DIR / "2_提取文件合并文件"
+TRANSLATION_JSON_CANDIDATES = [
+    BASE_DIR / "翻译对照.json",
+    BASE_DIR / "4_输出文件excel" / "翻译对照.json",
+]
 
 # ── 智能过滤正则 ──
 CHINESE_RE = re.compile(r"[\u4e00-\u9fff]")
@@ -309,6 +313,13 @@ def normalize_match_text(text: str) -> str:
     return text
 
 
+def find_translation_json_path() -> Path:
+    for candidate in TRANSLATION_JSON_CANDIDATES:
+        if candidate.exists():
+            return candidate
+    return TRANSLATION_JSON_CANDIDATES[0]
+
+
 def load_translation_originals(json_path: Path) -> tuple[set[str], set[str]]:
     if not json_path.exists():
         return set(), set()
@@ -342,10 +353,11 @@ def export_pending_translation_items(filtered_lines: list[str]) -> None:
         print(f"输出: {pending_path}")
         return
 
-    exact_originals, normalized_originals = load_translation_originals(TRANSLATION_JSON_PATH)
+    translation_json_path = find_translation_json_path()
+    exact_originals, normalized_originals = load_translation_originals(translation_json_path)
     if not exact_originals and not normalized_originals:
         pending_lines = filtered_lines
-        print(f"未找到翻译对照文件或文件为空: {TRANSLATION_JSON_PATH}")
+        print(f"未找到翻译对照文件或文件为空: {translation_json_path}")
     else:
         pending_lines = []
         for line in filtered_lines:
