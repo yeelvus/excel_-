@@ -39,7 +39,21 @@ def collect_dxf_files(input_path: Path) -> list[Path]:
 
 
 def build_lookup(path: Path) -> dict[str, str]:
-    data = json.loads(path.read_text(encoding="utf-8"))
+    if not path.exists():
+        print(f"翻译JSON不存在，按空词条处理: {path}")
+        return {}
+
+    raw = path.read_text(encoding="utf-8")
+    if not raw.strip():
+        print(f"翻译JSON为空，按空词条处理: {path}")
+        return {}
+
+    try:
+        data = json.loads(raw)
+    except json.JSONDecodeError:
+        print(f"翻译JSON格式异常，按空词条处理: {path}")
+        return {}
+
     lookup: dict[str, str] = {}
 
     if isinstance(data, dict):
@@ -101,12 +115,22 @@ def replace_multiline_text(text: str, lookup: dict[str, str]) -> tuple[str, int]
     return sep.join(new_parts), replaced
 
 
+def iter_spaces(doc):
+    for layout in doc.layouts:
+        yield layout
+    for block in doc.blocks:
+        name = getattr(block, "name", "")
+        if isinstance(name, str) and name.startswith("*"):
+            continue
+        yield block
+
+
 def translate_dxf(src: Path, dst: Path, lookup: dict[str, str]) -> int:
     doc = ezdxf.readfile(src)
     replaced_count = 0
 
-    for layout in doc.layouts:
-        for entity in layout:
+    for space in iter_spaces(doc):
+        for entity in space:
             etype = entity.dxftype()
             if etype == "TEXT":
                 raw = str(entity.dxf.text)
@@ -115,10 +139,10 @@ def translate_dxf(src: Path, dst: Path, lookup: dict[str, str]) -> int:
                     entity.dxf.text = new_text
                     replaced_count += count
             elif etype == "MTEXT":
-                raw = str(entity.text)
+                raw = str(getattr(entity, "text", ""))
                 new_text, count = replace_multiline_text(raw, lookup)
-                if count > 0:
-                    entity.text = new_text
+                if count > 0 and hasattr(entity, "text"):
+                    setattr(entity, "text", new_text)
                     replaced_count += count
             elif etype in {"ATTRIB", "ATTDEF"}:
                 raw = str(entity.dxf.text)
@@ -126,6 +150,13 @@ def translate_dxf(src: Path, dst: Path, lookup: dict[str, str]) -> int:
                 if count > 0:
                     entity.dxf.text = new_text
                     replaced_count += count
+            elif etype == "INSERT":
+                for attrib in getattr(entity, "attribs", []):
+                    raw = str(attrib.dxf.text)
+                    new_text, count = replace_multiline_text(raw, lookup)
+                    if count > 0:
+                        attrib.dxf.text = new_text
+                        replaced_count += count
 
     dst.parent.mkdir(parents=True, exist_ok=True)
     doc.saveas(dst)

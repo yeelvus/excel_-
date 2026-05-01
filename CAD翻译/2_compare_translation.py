@@ -58,7 +58,11 @@ def load_existing_json(json_path: Path) -> list[dict]:
     if not json_path.exists():
         return []
     try:
-        data = json.loads(json_path.read_text(encoding="utf-8"))
+        raw = json_path.read_text(encoding="utf-8")
+        if not raw.strip():
+            print(f"翻译JSON为空，按空词条处理: {json_path}")
+            return []
+        data = json.loads(raw)
         if isinstance(data, dict):
             return [
                 {"original": k, "translation": v}
@@ -68,7 +72,8 @@ def load_existing_json(json_path: Path) -> list[dict]:
         if isinstance(data, list):
             return data
         return []
-    except Exception:
+    except json.JSONDecodeError:
+        print(f"翻译JSON格式异常，按空词条处理: {json_path}")
         return []
 
 

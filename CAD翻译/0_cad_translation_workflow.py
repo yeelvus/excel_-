@@ -5,6 +5,7 @@ CAD翻译全自动流水线（DXF）
 """
 from __future__ import annotations
 
+import importlib.util
 import subprocess
 import sys
 from pathlib import Path
@@ -17,6 +18,32 @@ TRANSLATE_DIR = BASE_DIR / "3_翻译后文件"
 JSON_PATH = BASE_DIR / "翻译对照.json"
 OUTPUT_DIR = BASE_DIR / "4_输出文件cad"
 LINES_PER_SPLIT = 200
+
+
+def ensure_package(module_name: str, pip_name: str | None = None) -> None:
+    if importlib.util.find_spec(module_name) is not None:
+        return
+
+    package_name = pip_name or module_name
+    print(f"检测到当前环境缺少依赖 {module_name}，正在自动安装...")
+    try:
+        subprocess.run(
+            [sys.executable, "-m", "pip", "install", package_name],
+            check=True,
+            cwd=BASE_DIR,
+        )
+        print(f"依赖安装完成: {module_name}")
+    except subprocess.CalledProcessError as exc:
+        raise SystemExit(
+            f"自动安装 {module_name} 失败，请手动执行: "
+            f"{sys.executable} -m pip install {package_name}"
+        ) from exc
+
+
+def ensure_dependency() -> None:
+    """确保当前解释器已安装 CAD 处理依赖。"""
+    ensure_package("ezdxf")
+    ensure_package("opencc", "opencc-python-reimplemented")
 
 
 def run_step(label: str, args: list[str]) -> None:
@@ -62,6 +89,7 @@ def split_pending_file(
 
 
 def main() -> None:
+    ensure_dependency()
     INPUT_DIR.mkdir(parents=True, exist_ok=True)
     print(f"待翻译CAD目录: {INPUT_DIR}")
     print(f"翻译JSON:      {JSON_PATH}")
