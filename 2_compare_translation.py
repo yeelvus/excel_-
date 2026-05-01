@@ -124,21 +124,13 @@ def save_json_incremental(new_matched: list[dict], json_path: Path, output_dir: 
     final_list = list(existing_dict.values())
 
     output_dir.mkdir(parents=True, exist_ok=True)
-    json_text = json.dumps(final_list, ensure_ascii=False, indent=2) + "\n"
     json_path.write_text(
-        json_text,
-        encoding="utf-8"
-    )
-
-    output_json_path = output_dir / "翻译对照.json"
-    output_json_path.write_text(
-        json_text,
+        json.dumps(final_list, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8"
     )
 
     print(f"✅ JSON增量更新完成！本次新增 {added_count} 条，总计 {len(final_list)} 条")
-    print(f"主JSON: {json_path}")
-    print(f"副本JSON: {output_json_path}")
+    print(f"翻译JSON: {json_path}")
 
 
 def main() -> None:
