@@ -19,3 +19,7 @@ Thumbs.db
 *.xlsx
 *.xls
 *.pdf
+
+*.dxf
+
+*.dwg
