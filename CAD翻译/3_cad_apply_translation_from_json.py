@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from pathlib import Path
 
 try:
@@ -11,6 +12,35 @@ except ImportError as exc:
     raise SystemExit(
         "未安装依赖 ezdxf，请先执行: pip install ezdxf"
     ) from exc
+
+try:
+    from opencc import OpenCC
+except ImportError:
+    OpenCC = None
+
+CHINESE_RE = re.compile(r"[\u4e00-\u9fff\u3400-\u4dbf]")
+TRAD_HINT_CHARS = set(
+    "萬與專業東絲兩嚴喪個豐臨為麗舉麼義烏樂喬習鄉書買亂爭於虧雲亞產畝親億僅從倉儀們價眾優會傘偉傳傷倫偽體餘佈來係俠倀倆傾僅僉僑僞僥僱儲儷兒兌兗內冊冪凍凜幾鳳凱別刪則剋剎剛剥剮創劃劇劉劊劍劑勁動務勛勝勞勢勵勸區醫華協單賣盧鹵臥衛卻卷厭厲壓參雙發變"
+)
+
+
+def build_simplifier():
+    if OpenCC is None:
+        print("未安装 opencc，繁体转简体功能将跳过。可安装: pip install opencc-python-reimplemented")
+        return None
+    return OpenCC("t2s")
+
+
+def is_traditional(text: str) -> bool:
+    if not CHINESE_RE.search(text):
+        return False
+    return any(ch in TRAD_HINT_CHARS for ch in text)
+
+
+def to_simplified(text: str, simplifier) -> str:
+    if simplifier is None or not CHINESE_RE.search(text):
+        return text
+    return simplifier.convert(text)
 
 BASE_DIR = Path(__file__).resolve().parent
 INPUT_DIR = BASE_DIR / "00_dxf文件"
@@ -74,7 +104,7 @@ def build_lookup(path: Path) -> dict[str, str]:
     return lookup
 
 
-def replace_multiline_text(text: str, lookup: dict[str, str]) -> tuple[str, int]:
+def replace_multiline_text(text: str, lookup: dict[str, str], simplifier=None) -> tuple[str, int]:
     if "\\P" in text:
         sep = "\\P"
     elif "\r\n" in text:
@@ -84,35 +114,65 @@ def replace_multiline_text(text: str, lookup: dict[str, str]) -> tuple[str, int]
     else:
         sep = None
 
-    if sep is None:
-        stripped = text.strip()
+    def _lookup_or_simplify(segment: str) -> tuple[str, int]:
+        """先尝试查翻译，再尝试简体化，否则原样返回。"""
+        stripped = segment.strip()
+        if not stripped:
+            return segment, 0
+        # 优先直接匹配
         if stripped in lookup:
-            leading = len(text) - len(text.lstrip())
-            trailing = len(text) - len(text.rstrip())
-            prefix = text[:leading]
-            suffix = text[len(text) - trailing:] if trailing else ""
+            leading = len(segment) - len(segment.lstrip())
+            trailing = len(segment) - len(segment.rstrip())
+            prefix = segment[:leading]
+            suffix = segment[len(segment) - trailing:] if trailing else ""
             return f"{prefix}{lookup[stripped]}{suffix}", 1
-        return text, 0
+        # 尝试将繁体转简体后再查
+        simp = to_simplified(stripped, simplifier)
+        if simp != stripped and simp in lookup:
+            leading = len(segment) - len(segment.lstrip())
+            trailing = len(segment) - len(segment.rstrip())
+            prefix = segment[:leading]
+            suffix = segment[len(segment) - trailing:] if trailing else ""
+            return f"{prefix}{lookup[simp]}{suffix}", 1
+        # 无翻译条目时，若含汉字则直接转简体（无需判断是否繁体，OpenCC 对简体无影响）
+        if CHINESE_RE.search(stripped):
+            converted = to_simplified(segment, simplifier)
+            if converted != segment:
+                return converted, 1
+        return segment, 0
+
+    if sep is None:
+        new_text, count = _lookup_or_simplify(text)
+        return new_text, count
 
     parts = text.split(sep)
     replaced = 0
     new_parts: list[str] = []
 
     for part in parts:
-        stripped = part.strip()
-        if stripped and stripped in lookup:
-            leading = len(part) - len(part.lstrip())
-            trailing = len(part) - len(part.rstrip())
-            prefix = part[:leading]
-            suffix = part[len(part) - trailing:] if trailing else ""
-            new_parts.append(f"{prefix}{lookup[stripped]}{suffix}")
-            replaced += 1
-        else:
-            new_parts.append(part)
+        new_part, count = _lookup_or_simplify(part)
+        new_parts.append(new_part)
+        replaced += count
 
     if replaced == 0:
         return text, 0
     return sep.join(new_parts), replaced
+
+
+def process_text(text: str, lookup: dict[str, str], simplifier) -> tuple[str, int]:
+    """查翻译 + 繁→简双重处理。
+
+    先做基于 lookup 的段落级替换，再对整体文本做一次全文简化，
+    确保 MTEXT 格式代码内嵌的繁体汉字（如 {\\fFont|...;繁體}）也能被转换。
+    """
+    new_text, count = replace_multiline_text(text, lookup, simplifier)
+    # 兜底：对整体文本再做一次简化，覆盖格式代码内嵌字符
+    if simplifier and CHINESE_RE.search(new_text):
+        simplified = to_simplified(new_text, simplifier)
+        if simplified != new_text:
+            new_text = simplified
+            count += 1
+    return new_text, count
 
 
 def iter_spaces(doc):
@@ -125,7 +185,7 @@ def iter_spaces(doc):
         yield block
 
 
-def translate_dxf(src: Path, dst: Path, lookup: dict[str, str]) -> int:
+def translate_dxf(src: Path, dst: Path, lookup: dict[str, str], simplifier=None) -> int:
     doc = ezdxf.readfile(src)
     replaced_count = 0
 
@@ -134,26 +194,26 @@ def translate_dxf(src: Path, dst: Path, lookup: dict[str, str]) -> int:
             etype = entity.dxftype()
             if etype == "TEXT":
                 raw = str(entity.dxf.text)
-                new_text, count = replace_multiline_text(raw, lookup)
+                new_text, count = process_text(raw, lookup, simplifier)
                 if count > 0:
                     entity.dxf.text = new_text
                     replaced_count += count
             elif etype == "MTEXT":
                 raw = str(getattr(entity, "text", ""))
-                new_text, count = replace_multiline_text(raw, lookup)
+                new_text, count = process_text(raw, lookup, simplifier)
                 if count > 0 and hasattr(entity, "text"):
                     setattr(entity, "text", new_text)
                     replaced_count += count
             elif etype in {"ATTRIB", "ATTDEF"}:
                 raw = str(entity.dxf.text)
-                new_text, count = replace_multiline_text(raw, lookup)
+                new_text, count = process_text(raw, lookup, simplifier)
                 if count > 0:
                     entity.dxf.text = new_text
                     replaced_count += count
             elif etype == "INSERT":
                 for attrib in getattr(entity, "attribs", []):
                     raw = str(attrib.dxf.text)
-                    new_text, count = replace_multiline_text(raw, lookup)
+                    new_text, count = process_text(raw, lookup, simplifier)
                     if count > 0:
                         attrib.dxf.text = new_text
                         replaced_count += count
@@ -177,12 +237,16 @@ def main() -> None:
     lookup = build_lookup(json_path)
     print(f"已加载翻译词条: {len(lookup)} 条")
 
+    simplifier = build_simplifier()
+    if simplifier:
+        print("繁体转简体功能已启用")
+
     source_root = input_path if input_path.is_dir() else input_path.parent
     total = 0
     for src in files:
         rel = src.relative_to(source_root) if input_path.is_dir() else Path(src.name)
         dst = output_dir / rel
-        count = translate_dxf(src, dst, lookup)
+        count = translate_dxf(src, dst, lookup, simplifier)
         total += count
         print(f"[{count:>4} 处替换] {rel}")
 
