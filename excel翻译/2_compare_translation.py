@@ -6,6 +6,7 @@
 """
 import json
 import re
+import unicodedata
 import argparse
 from pathlib import Path
 
@@ -84,7 +85,8 @@ def parse_translation_file(path: Path) -> dict[str, str]:
 
 
 def normalize_for_match(text: str) -> str:
-    t = text.strip()
+    """NFC 归一化 + 折叠多余空格，消除泰语 Unicode 编码差异和多空格问题。"""
+    t = unicodedata.normalize("NFC", text.strip())
     t = re.sub(r"\s+", " ", t)
     return t
 

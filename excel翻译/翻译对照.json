@@ -7558,5 +7558,265 @@
   {
     "original": "รวมราคารายการที่ 1 - 8",
     "translation": "第 1 - 8 项总价"
+  },
+  {
+    "original": "Project                               อาคารผลิต",
+    "translation": "项目 生产厂房"
+  },
+  {
+    "original": "อาคารผลิต",
+    "translation": "生产厂房"
+  },
+  {
+    "original": "Date :     20-04-69",
+    "translation": "日期：2026-04-20"
+  },
+  {
+    "original": "ALL RISKS INSURANCE ประกันภัยความเสี่ยงทุกประเภท",
+    "translation": "一切险保险"
+  },
+  {
+    "original": "SECURITY พนักงานความปลอดภัย",
+    "translation": "保安人员"
+  },
+  {
+    "original": "Date :    20-04-69",
+    "translation": "日期：2026-04-20"
+  },
+  {
+    "original": "ระบบกันซึม",
+    "translation": "防水系统"
+  },
+  {
+    "original": "แป Z35030@1.50 m.",
+    "translation": "Z型钢檩条 Z350×30@1.50m"
+  },
+  {
+    "original": "สีกันสนิม",
+    "translation": "防锈漆"
+  },
+  {
+    "original": "สีกันไฟ",
+    "translation": "防火漆"
+  },
+  {
+    "original": "งานพื้น FLAT SLAB ชั้น1",
+    "translation": "一层平板楼板工程"
+  },
+  {
+    "original": "TOTAL B6 งานพื้น FLAT SLAB ชั้น1",
+    "translation": "B6 一层平板楼板工程 合计"
+  },
+  {
+    "original": "งานพื้น FLAT SLAB ชั้น2",
+    "translation": "二层平板楼板工程"
+  },
+  {
+    "original": "TOTAL B7 งานพื้น FLAT SLAB ชั้น2",
+    "translation": "B7 二层平板楼板工程 合计"
+  },
+  {
+    "original": "งานพื้น FLAT SLAB ชั้น3",
+    "translation": "三层平板楼板工程"
+  },
+  {
+    "original": "TOTAL B8 งานพื้น FLAT SLAB ชั้น3",
+    "translation": "B8 三层平板楼板工程 合计"
+  },
+  {
+    "original": "หลังคาอาคาร",
+    "translation": "建筑屋面"
+  },
+  {
+    "original": "Metal Roof Sheet 0.51 mm. Thk. Bluescope Color Bond สี Ocen Blue",
+    "translation": "金属屋面板 0.51mm Bluescope Color Bond 海洋蓝"
+  },
+  {
+    "original": "Metal Flashing Bluescope Color Bond สี Ocen Blue",
+    "translation": "金属泛水 Bluescope Color Bond 海洋蓝"
+  },
+  {
+    "original": "หลังคาระบายอากาศ Metal Flashing Bluescope Color Bond สี Ocen Blue",
+    "translation": "通风屋面金属泛水 Bluescope Color Bond 海洋蓝"
+  },
+  {
+    "original": "ตะแกรงกันแมลง",
+    "translation": "防虫网"
+  },
+  {
+    "original": "หลังคากันสาด",
+    "translation": "雨棚屋面"
+  },
+  {
+    "original": "ผนัง5 Metal Sheet SIDING COLORED STEEL SHEET TYPE W-760 หนา0.51 APT สี Ocean Blue",
+    "translation": "外墙5 彩钢板 W-760 0.51mm 海洋蓝"
+  },
+  {
+    "original": "เสาเอ็นทับหลัง คสล.",
+    "translation": "构造柱及圈梁"
+  },
+  {
+    "original": "พื้น5 ปูกระเบื้อง Kenzai Granite Tile GF-201-10สีบราวนี่ ขนาด0.20 x 0.10 ม.(บันได ST-2,ST-4)  รวมราคางานบันได",
+    "translation": "地面5 Kenzai 花岗岩砖 200×100mm 棕色（含 ST-2、ST-4 楼梯）"
+  },
+  {
+    "original": "ปรับระดับปูนทราย",
+    "translation": "水泥砂浆找平层"
+  },
+  {
+    "original": "D7 อลูมิเนียมบานเลื่อน ขนาด 1.60x2.20ม.",
+    "translation": "D7 铝合金推拉门 1.60×2.20m"
+  },
+  {
+    "original": "D7.1 วงกบอลูมิเนียม ขนาด 1.60x2.20ม.",
+    "translation": "D7.1 铝合金固定窗 1.60×2.20m"
+  },
+  {
+    "original": "D10.1 วงกบอลูมิเนียม ขนาด 0.90x2.00 ม.",
+    "translation": "D10.1 铝合金固定窗 0.90×2.00m"
+  },
+  {
+    "original": "D11 อลูมิเนียมบานเลื่อน ขนาด 1.60x2.20 ม.",
+    "translation": "D11 铝合金推拉门 1.60×2.20m"
+  },
+  {
+    "original": "W4 อลูมิเนียมบานเลื่อน ขนาด 1.60x1.10ม.",
+    "translation": "W4 铝合金推拉窗 1.60×1.10m"
+  },
+  {
+    "original": "W5 อลูมิเนียมติดตาย ขนาด 2.30x1.60ม.",
+    "translation": "W5 铝合金固定窗 2.30×1.60m"
+  },
+  {
+    "original": "W6 อลูมิเนียมบานเกล็ดกระจก ขนาด 3.00x1.70ม.",
+    "translation": "W6 铝合金玻璃百叶窗 3.00×1.70m"
+  },
+  {
+    "original": "W6.1 อลูมิเนียมบานเกล็ดอลูมิเนียม ขนาด 0.50x4.00ม.",
+    "translation": "W6.1 铝合金百叶窗 0.50×4.00m"
+  },
+  {
+    "original": "ตะแกรงพื้น CT640Z1PN(HM) STAINLESS TRAP FLOOR DRAIN",
+    "translation": "不锈钢地漏 CT640Z1PN"
+  },
+  {
+    "original": "กระจกเงา ขอบอลูมิเนียม ขนาด 1.05x 2.40   ม.",
+    "translation": "铝框镜子 1.05×2.40m"
+  },
+  {
+    "original": "กระจกเงา ขอบอลูมิเนียม ขนาด 1.05x 2.20  ม.",
+    "translation": "铝框镜子 1.05×2.20m"
+  },
+  {
+    "original": "กระจกเงา ขอบอลูมิเนียม ขนาด 1.05x 1.70  ม.",
+    "translation": "铝框镜子 1.05×1.70m"
+  },
+  {
+    "original": "ลูกตั้ง,ลูกนอน,ชานพักผิวขัดมัน",
+    "translation": "楼梯踏步及休息平台压光"
+  },
+  {
+    "original": "จมูกบันได PVC",
+    "translation": "楼梯防滑条 PVC"
+  },
+  {
+    "original": "ลูกตั้ง,ลูกนอน,ชานพักปูกระเบื้อง Kenzai Granite Tile GF-201-10สีบราวนี่ ขนาด0.20 x 0.10 ม.",
+    "translation": "楼梯踏步及休息平台铺 Kenzai 花岗岩砖 200×100mm 棕色"
+  },
+  {
+    "original": "จมูกบันได กระเบื้อง Kenzai Granite สีบราวนี่",
+    "translation": "Kenzai 花岗岩楼梯防滑条 棕色"
+  },
+  {
+    "original": "ST-5 (2ชุด)",
+    "translation": "ST-5（2套）"
+  },
+  {
+    "original": "ลูกนอนเหล็กCHECKRED หนา4.5มม.ทาสี",
+    "translation": "钢踏步 花纹钢板 4.5mm 刷漆"
+  },
+  {
+    "original": "ชานพักเหล็กCHECKRED หนา 4มม.โครงเหล็ก L- 50x50x4.5มม.@0.50ม.ทาสี",
+    "translation": "钢休息平台 4mm 花纹钢板 + L50×50×4.5 框架"
+  },
+  {
+    "original": "ราวบันไดเหล็ก ทาสี",
+    "translation": "钢栏杆刷漆"
+  },
+  {
+    "original": "ทางเดินนอกอาคารชั้น2",
+    "translation": "二层室外走道"
+  },
+  {
+    "original": "ทางเดินผิวขัดมัน",
+    "translation": "走道压光面"
+  },
+  {
+    "original": "บันไดST-7.1ขึ้นหลังคาอาคาร",
+    "translation": "ST-7.1 通往屋面楼梯"
+  },
+  {
+    "original": "งานเบ็ดเตล็ด                                    INC. PRELIMINARY WORK",
+    "translation": "零星工程（含前期费用）"
+  },
+  {
+    "original": "งานปรับถม COMPACTED EXISTING SOIL TO 95% STANDARD PROCTOR DENSITY",
+    "translation": "场地回填压实至95%标准普氏密度"
+  },
+  {
+    "original": "งานบดอัดทราย 0.05 M. COMPACTED SAND",
+    "translation": "砂垫层 0.05m 压实"
+  },
+  {
+    "original": "ขอบคันหิน คสล.RC CURB",
+    "translation": "混凝土路缘石"
+  },
+  {
+    "original": "คอนกรีต 240 Ksc. RC. ROAD 0.20 M. THK.",
+    "translation": "240 Ksc 道路混凝土 0.20m 厚"
+  },
+  {
+    "original": "เหล็กJoint 25mm.DB@0.30ม.",
+    "translation": "25mm 伸缩缝钢筋 @0.30m"
+  },
+  {
+    "original": "เหล็กไวเมท 9มม.@0.20ม.#",
+    "translation": "9mm 分布钢筋 @0.20m"
+  },
+  {
+    "original": "ยางมะตอย FLASTIC JOINT FILLER",
+    "translation": "沥青伸缩缝填料"
+  },
+  {
+    "original": "งานสีจราจร Thermo Plastic Paint for Road",
+    "translation": "热熔道路标线"
+  },
+  {
+    "original": "งานเบ็ดเตล็ด",
+    "translation": "零星工程"
+  },
+  {
+    "original": "CABLE_IEC01 450/750 V. (THW เดิม)",
+    "translation": "IEC01 450/750V 电缆（原THW）"
+  },
+  {
+    "original": "โคมไฟ STREET LIGHT",
+    "translation": "道路照明灯"
+  },
+  {
+    "original": "โคมไฟ 1x36 W หลอด LED T8 18W DL",
+    "translation": "单管36W LED T8 18W 灯具"
+  },
+  {
+    "original": "- เต้ารับโทรศัพท์และคอมพิวเตอร์ RJ 45 F/O",
+    "translation": "- 电话及计算机 RJ45 网络插座"
+  },
+  {
+    "original": "- ลิฟต์โดยสารและคนพิการ พร้อมชุดควบคุม",
+    "translation": "- 客梯及无障碍电梯（含控制系统）"
+  },
+  {
+    "original": "- บันไดเลื่อน พร้อมชุดควบคุม",
+    "translation": "- 自动扶梯（含控制系统）"
   }
 ]

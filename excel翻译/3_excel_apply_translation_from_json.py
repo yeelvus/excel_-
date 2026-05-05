@@ -12,6 +12,8 @@ Excel翻译替换工具
 """
 
 import json
+import re
+import unicodedata
 import argparse
 from pathlib import Path
 
@@ -46,6 +48,12 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+def _norm(text: str) -> str:
+    """NFC 归一化 + 折叠空白，用于模糊匹配。"""
+    t = unicodedata.normalize("NFC", text.strip())
+    return re.sub(r"\s+", " ", t)
+
+
 def normalize_path_text(path_text: str) -> str:
     return path_text.strip().strip('"').strip("'")
 
@@ -65,25 +73,44 @@ def collect_excel_files(input_path: Path) -> list[Path]:
     raise FileNotFoundError(f'路径不存在: {input_path}')
 
 
-def build_lookup(path: Path) -> dict[str, str]:
+def build_lookup(path: Path) -> tuple[dict[str, str], dict[str, str], list[str]]:
+    """返回 (精确lookup, 归一化lookup, 按长度降序的归一化key列表)。"""
     data = json.loads(path.read_text(encoding='utf-8'))
-    lookup: dict[str, str] = {}
+    exact: dict[str, str] = {}
+
+    pairs: list[tuple[str, str]] = []
     if isinstance(data, dict):
-        for orig, trans in data.items():
-            if isinstance(orig, str) and isinstance(trans, str):
-                if orig.strip() and trans.strip():
-                    lookup[orig.strip()] = trans.strip()
-        return lookup
+        pairs = [(k, v) for k, v in data.items() if isinstance(k, str) and isinstance(v, str)]
+    else:
+        pairs = [
+            (item.get('original', ''), item.get('translation', ''))
+            for item in data if isinstance(item, dict)
+        ]
 
-    for item in data:
-        orig = item.get('original', '').strip()
-        trans = item.get('translation', '').strip()
+    for orig, trans in pairs:
+        orig, trans = orig.strip(), trans.strip()
         if orig and trans:
-            lookup[orig] = trans
-    return lookup
+            exact[orig] = trans
+
+    # 归一化 lookup（NFC + 折叠空白）
+    norm: dict[str, str] = {}
+    for orig, trans in exact.items():
+        nk = _norm(orig)
+        if nk not in norm:
+            norm[nk] = trans
+
+    # 按 key 长度降序，用于子串替换时优先匹配较长条目
+    sorted_norm_keys = sorted(norm.keys(), key=len, reverse=True)
+
+    return exact, norm, sorted_norm_keys
 
 
-def replace_multiline_text(text: str, lookup: dict[str, str]) -> tuple[str, int]:
+def replace_multiline_text(
+    text: str,
+    exact: dict[str, str],
+    norm: dict[str, str],
+    sorted_norm_keys: list[str],
+) -> tuple[str, int]:
     normalized = text.replace('\r\n', '\n').replace('\r', '\n')
     parts = normalized.split('\n')
     replaced = 0
@@ -91,13 +118,41 @@ def replace_multiline_text(text: str, lookup: dict[str, str]) -> tuple[str, int]
 
     for part in parts:
         stripped = part.strip()
-        if stripped and stripped in lookup:
-            leading = len(part) - len(part.lstrip())
-            trailing = len(part) - len(part.rstrip())
-            prefix = part[:leading]
-            suffix = part[len(part) - trailing:] if trailing else ''
-            new_parts.append(f"{prefix}{lookup[stripped]}{suffix}")
+        if not stripped:
+            new_parts.append(part)
+            continue
+
+        leading = len(part) - len(part.lstrip())
+        trailing = len(part) - len(part.rstrip())
+        prefix = part[:leading]
+        suffix = part[len(part) - trailing:] if trailing else ''
+
+        # 1. 精确匹配
+        if stripped in exact:
+            new_parts.append(f"{prefix}{exact[stripped]}{suffix}")
             replaced += 1
+            continue
+
+        # 2. 归一化精确匹配（NFC + 折叠空白）
+        nk = _norm(stripped)
+        if nk in norm:
+            new_parts.append(f"{prefix}{norm[nk]}{suffix}")
+            replaced += 1
+            continue
+
+        # 3. 子串替换：把归一化后的行文本里包含的所有 key 依次替换
+        #    适用于翻译者把一行拆成多条、或录入时空格不统一的情况
+        result = nk
+        sub_count = 0
+        for key in sorted_norm_keys:
+            if len(key) < 6:  # 过短的 key 不做子串替换，避免误伤
+                continue
+            if key in result:
+                result = result.replace(key, norm[key])
+                sub_count += 1
+        if sub_count:
+            new_parts.append(f"{prefix}{result}{suffix}")
+            replaced += sub_count
         else:
             new_parts.append(part)
 
@@ -106,7 +161,13 @@ def replace_multiline_text(text: str, lookup: dict[str, str]) -> tuple[str, int]
     return '\n'.join(new_parts), replaced
 
 
-def translate_workbook(src: Path, dst: Path, lookup: dict[str, str]) -> int:
+def translate_workbook(
+    src: Path,
+    dst: Path,
+    exact: dict[str, str],
+    norm: dict[str, str],
+    sorted_norm_keys: list[str],
+) -> int:
     wb = load_workbook(src, data_only=False)
     count = 0
     for ws in wb.worksheets:
@@ -117,12 +178,12 @@ def translate_workbook(src: Path, dst: Path, lookup: dict[str, str]) -> int:
                 val = cell.value
                 if val is None:
                     continue
-                # 跳过公式单元格
                 if isinstance(val, str) and val.lstrip().startswith('='):
                     continue
-                # 字符串单元格做精确匹配替换
                 if isinstance(val, str):
-                    replaced_text, replaced_count = replace_multiline_text(val, lookup)
+                    replaced_text, replaced_count = replace_multiline_text(
+                        val, exact, norm, sorted_norm_keys
+                    )
                     if replaced_count > 0:
                         cell.value = replaced_text
                         count += replaced_count
@@ -151,8 +212,8 @@ def main() -> None:
         return
 
     output_dir.mkdir(parents=True, exist_ok=True)
-    lookup = build_lookup(json_path)
-    print(f"已加载翻译词条: {len(lookup)} 条")
+    exact, norm, sorted_norm_keys = build_lookup(json_path)
+    print(f"已加载翻译词条: {len(exact)} 条（精确），{len(norm)} 条（归一化）")
 
     source_root = input_path if input_path.is_dir() else input_path.parent
     print(f"发现 Excel 文件: {len(excel_files)} 个\n")
@@ -162,7 +223,7 @@ def main() -> None:
         relative_path = src.relative_to(source_root) if input_path.is_dir() else Path(src.name)
         dst = output_dir / relative_path
         dst.parent.mkdir(parents=True, exist_ok=True)
-        n = translate_workbook(src, dst, lookup)
+        n = translate_workbook(src, dst, exact, norm, sorted_norm_keys)
         total += n
         print(f"  [{n:>4} 处替换]  {relative_path}")
 

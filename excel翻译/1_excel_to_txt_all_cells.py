@@ -370,6 +370,24 @@ def export_pending_translation_items(filtered_lines: list[str]) -> None:
     print(f"待翻译项: {len(pending_lines)} 行")
     print(f"输出: {pending_path}")
 
+    # 待翻译项按语言分类，方便选择性翻译
+    thai_pending, english_pending = _split_by_language(pending_lines)
+    (MERGE_DIR / "待翻译_泰文.md").write_text("\n".join(thai_pending) + "\n", encoding="utf-8")
+    (MERGE_DIR / "待翻译_英文.md").write_text("\n".join(english_pending) + "\n", encoding="utf-8")
+    print(f"  待翻译分类: 泰文 {len(thai_pending)} 行 → 待翻译_泰文.md, 英文 {len(english_pending)} 行 → 待翻译_英文.md")
+
+
+def _split_by_language(lines: list[str]) -> tuple[list[str], list[str]]:
+    """将行按语言拆分为泰文行和英文行（已剔除中文的前提下）。"""
+    thai_lines: list[str] = []
+    english_lines: list[str] = []
+    for line in lines:
+        if THAI_RE.search(line.strip()):
+            thai_lines.append(line)
+        else:
+            english_lines.append(line)
+    return thai_lines, english_lines
+
 
 def _chinese_ratio(text: str) -> float:
     """计算中文字符占非空白字符的比例。"""
@@ -447,6 +465,13 @@ def smart_filter(merged_path: Path) -> None:
     print(f"  剔除纯中文: {len(removed_chinese)} 行 → {chinese_path.name}")
     print(f"  剔除数字/单位/代码/符号/纯英文: {len(removed_other)} 行 → {other_path.name}")
     print(f"输出: {filtered_path}")
+
+    # 按语言分类保存（方便单独翻译）
+    thai_lines, english_lines = _split_by_language(kept)
+    (MERGE_DIR / "分类_泰文.md").write_text("\n".join(thai_lines) + "\n", encoding="utf-8")
+    (MERGE_DIR / "分类_英文.md").write_text("\n".join(english_lines) + "\n", encoding="utf-8")
+    (MERGE_DIR / "分类_中文.md").write_text("\n".join(removed_chinese) + "\n", encoding="utf-8")
+    print(f"  语言分类: 泰文 {len(thai_lines)} 行, 英文 {len(english_lines)} 行, 中文 {len(removed_chinese)} 行")
 
     export_pending_translation_items(kept)
 
