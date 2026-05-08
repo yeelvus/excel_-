@@ -349,7 +349,7 @@ def main() -> None:
             md_path = OUTPUT_DIR / md_name
 
         try:
-            lines = extract_excel_to_txt(
+            extract_excel_to_txt(
                 excel_path=excel_path,
                 txt_path=md_path,
                 include_empty=args.include_empty,
@@ -392,6 +392,9 @@ def merge_md_files() -> None:
     md_files = sorted(OUTPUT_DIR.glob("*.md"))
     if not md_files:
         print("\n没有可合并的md文件")
+        # 仍然输出空的待翻译CSV，保证后续步骤稳定可运行
+        MERGE_DIR.mkdir(parents=True, exist_ok=True)
+        export_pending_translation_items([])
         return
 
     MERGE_DIR.mkdir(parents=True, exist_ok=True)

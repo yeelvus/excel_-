@@ -18,11 +18,11 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
 INPUT_DIR = BASE_DIR / "0_待翻译文件"
-PREPARE_SOURCE_FILE = BASE_DIR / "2_提取文件合并文件" / "待翻译项.csv"
+MERGED_DIR = BASE_DIR / "2_提取文件合并文件"
+PREPARE_SOURCE_FILE = MERGED_DIR / "待翻译项.csv"
 TRANSLATE_DIR = BASE_DIR / "3_翻译后文件"
 JSON_PATH = BASE_DIR / "翻译对照.json"
 OUTPUT_DIR = BASE_DIR / "4_输出文件excel"
-MERGED_DIR = BASE_DIR / "2_提取文件合并文件"
 OUTPUT_EXCEL_SUFFIXES = {".xlsx", ".xlsm", ".xltx", ".xltm"}
 OUTPUT_PREFIX = "翻译"
 
@@ -35,6 +35,9 @@ def run_step(label: str, args: list[str]) -> None:
 
 
 def cleanup_md_files(target_dir: Path) -> int:
+    if not target_dir.exists():
+        return 0
+
     deleted = 0
     for md_file in target_dir.rglob("*.md"):
         if md_file.is_file():
@@ -44,6 +47,9 @@ def cleanup_md_files(target_dir: Path) -> int:
 
 
 def add_prefix_to_output_excels(target_dir: Path, prefix: str) -> int:
+    if not target_dir.exists():
+        return 0
+
     renamed = 0
     for excel_file in sorted(target_dir.rglob("*")):
         if not excel_file.is_file():
@@ -55,7 +61,7 @@ def add_prefix_to_output_excels(target_dir: Path, prefix: str) -> int:
 
         new_path = excel_file.with_name(f"{prefix}{excel_file.name}")
         if new_path.exists():
-            new_path.unlink()
+            continue
         excel_file.rename(new_path)
         renamed += 1
     return renamed
@@ -66,41 +72,41 @@ def main() -> None:
     print(f"翻译对照JSON:    {JSON_PATH}")
     print(f"输出目录:        {OUTPUT_DIR}")
 
-    # 步骤1：提取Excel文本 → 生成 待翻译项.csv
-    run_step(
-        "提取Excel文本 → 生成待翻译项.csv",
-        [
-            sys.executable,
-            str(BASE_DIR / "1_excel_to_txt_all_cells.py"),
-            str(INPUT_DIR),
-        ],
-    )
+    steps: list[tuple[str, list[str]]] = [
+        (
+            "提取Excel文本 → 生成待翻译项.csv",
+            [
+                sys.executable,
+                str(BASE_DIR / "1_excel_to_txt_all_cells.py"),
+                str(INPUT_DIR),
+            ],
+        ),
+        (
+            "将翻译后文件增量写入翻译对照.json",
+            [
+                sys.executable,
+                str(BASE_DIR / "2_compare_translation.py"),
+                "--source-file", str(PREPARE_SOURCE_FILE),
+                "--translate-dir", str(TRANSLATE_DIR),
+                "--json-path", str(JSON_PATH),
+                "--output-dir", str(OUTPUT_DIR),
+                "--update-existing",
+            ],
+        ),
+        (
+            "根据翻译对照.json 输出翻译后的Excel",
+            [
+                sys.executable,
+                str(BASE_DIR / "3_excel_apply_translation_from_json.py"),
+                str(INPUT_DIR),
+                "--json-path", str(JSON_PATH),
+                "--output-dir", str(OUTPUT_DIR),
+            ],
+        ),
+    ]
 
-    # 步骤2：将 3_翻译后文件 里已填好的译文增量写入 翻译对照.json
-    run_step(
-        "将翻译后文件增量写入翻译对照.json",
-        [
-            sys.executable,
-            str(BASE_DIR / "2_compare_translation.py"),
-            "--source-file", str(PREPARE_SOURCE_FILE),
-            "--translate-dir", str(TRANSLATE_DIR),
-            "--json-path", str(JSON_PATH),
-            "--output-dir", str(OUTPUT_DIR),
-            "--update-existing",
-        ],
-    )
-
-    # 步骤3：根据 json 对 0_待翻译文件 里的Excel输出翻译版
-    run_step(
-        "根据翻译对照.json 输出翻译后的Excel",
-        [
-            sys.executable,
-            str(BASE_DIR / "3_excel_apply_translation_from_json.py"),
-            str(INPUT_DIR),
-            "--json-path", str(JSON_PATH),
-            "--output-dir", str(OUTPUT_DIR),
-        ],
-    )
+    for label, args in steps:
+        run_step(label, args)
 
     renamed_excel = add_prefix_to_output_excels(OUTPUT_DIR, OUTPUT_PREFIX)
     deleted_md = cleanup_md_files(MERGED_DIR)

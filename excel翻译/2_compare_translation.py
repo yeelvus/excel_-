@@ -66,6 +66,13 @@ def _append_conflict(
     vals.add(new_val)
 
 
+def pick_first(row: dict[str, str], keys: list[str]) -> str:
+    for k in keys:
+        if k in row and str(row[k]).strip():
+            return str(row[k]).strip()
+    return ""
+
+
 def parse_translation_file(path: Path) -> dict[str, str]:
     """解析翻译文件，返回 {原文: 译文} 映射"""
     text = path.read_text(encoding="utf-8")
@@ -109,17 +116,11 @@ def parse_translation_csv(path: Path) -> dict[str, str]:
     """解析翻译CSV，返回 {原文: 译文}。"""
     pairs: dict[str, str] = {}
 
-    def pick(row: dict[str, str], keys: list[str]) -> str:
-        for k in keys:
-            if k in row and str(row[k]).strip():
-                return str(row[k]).strip()
-        return ""
-
     with path.open("r", encoding="utf-8-sig", newline="") as f:
         reader = csv.DictReader(f)
         for row in reader:
-            original = pick(row, ["original", "原文", "source", "text"])
-            translation = pick(row, ["translation", "译文", "target", "translated"])
+            original = pick_first(row, ["original", "原文", "source", "text"])
+            translation = pick_first(row, ["translation", "译文", "target", "translated"])
             if original and translation and original != translation:
                 pairs[original] = translation
     return pairs
@@ -130,16 +131,10 @@ def load_source_lines(source_file: Path) -> list[str]:
     if source_file.suffix.lower() == ".csv":
         lines: list[str] = []
 
-        def pick(row: dict[str, str], keys: list[str]) -> str:
-            for k in keys:
-                if k in row and str(row[k]).strip():
-                    return str(row[k]).strip()
-            return ""
-
         with source_file.open("r", encoding="utf-8-sig", newline="") as f:
             reader = csv.DictReader(f)
             for row in reader:
-                text = pick(row, ["original", "原文", "source", "text"])
+                text = pick_first(row, ["original", "原文", "source", "text"])
                 if text:
                     lines.append(text)
         return lines
@@ -157,6 +152,24 @@ def normalize_for_match(text: str) -> str:
     return t
 
 
+def collect_translation_files(translate_dir: Path) -> list[Path]:
+    trans_csv_files = sorted(translate_dir.glob(MANAGED_TRANS_CSV_GLOB))
+    trans_md_files = sorted(translate_dir.glob(MANAGED_TRANS_GLOB))
+
+    if not trans_csv_files:
+        trans_csv_files = sorted(
+            p for p in translate_dir.glob("*.csv")
+            if p.parent.name != ARCHIVE_DIR_NAME
+        )
+    if not trans_md_files:
+        trans_md_files = sorted(
+            p for p in translate_dir.glob("*.md")
+            if p.parent.name != ARCHIVE_DIR_NAME
+        )
+
+    return trans_csv_files + trans_md_files
+
+
 def load_existing_json(json_path: Path) -> list[dict]:
     """加载已存在的JSON，返回已有的匹配列表"""
     if json_path.exists():
@@ -168,6 +181,8 @@ def load_existing_json(json_path: Path) -> list[dict]:
                     for original, translation in data.items()
                     if isinstance(original, str) and isinstance(translation, str)
                 ]
+            if not isinstance(data, list):
+                return []
             print(f"已加载现有翻译对照: {len(data)} 条")
             return data
         except Exception:
@@ -265,20 +280,7 @@ def main() -> None:
 
     # 解析翻译文件：优先CSV分片，其次MD分片，最后回退同目录全部同类文件
     all_pairs: dict[str, str] = {}
-    trans_csv_files = sorted(translate_dir.glob(MANAGED_TRANS_CSV_GLOB))
-    trans_md_files = sorted(translate_dir.glob(MANAGED_TRANS_GLOB))
-    if not trans_csv_files:
-        trans_csv_files = sorted(
-            p for p in translate_dir.glob("*.csv")
-            if p.parent.name != ARCHIVE_DIR_NAME
-        )
-    if not trans_md_files:
-        trans_md_files = sorted(
-            p for p in translate_dir.glob("*.md")
-            if p.parent.name != ARCHIVE_DIR_NAME
-        )
-
-    trans_files = trans_csv_files + trans_md_files
+    trans_files = collect_translation_files(translate_dir)
     if not trans_files:
         print("未找到可解析的翻译文件（csv/md）")
 
