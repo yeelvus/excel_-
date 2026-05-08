@@ -1,0 +1,629 @@
+id,original,translation
+1,Bill of Quantities,工程量清单
+2,Owner     บริษัท เอเชี� ยน อะไลอันซ์ อินเตอร์เนชั�นแนล จํากัด (มหาชน),业主 亚洲联盟国际公众有限公司
+3,Contractor  บริษัท เฟอร์ คอนสตรัคชั�น จํากัด,承包商 菲尔建筑工程有限公司
+4,Date ;  20/4/69,日期；20/4/69
+5,No.95/8 Village No.1 District Khlongnueng Amphoe Klongluang Pathum Thani 12120,95/8号 1村 空能县 空銮区 巴吞他尼府 12120
+6,Contractor       บริษัท เฟอร์ คอนสตรัคชั่น จํากัด                                                                                              Date :     20-04-69,承包商 菲尔建筑工程有限公司
+7,UNIT RATE,单价
+8,TOTAL COST,总价
+9,PRELIMINARY WORK,准备工作
+10,STRUCTURAL WORK,结构工程
+11,ARCHITECTURAL AND EXTERNAL WORK,建筑及室外工程
+12,ELECTRICAL WORK,电气工程
+13,AIR CONDITION AND VENTILATION WORK,空调及通风工程
+14,SANITARY WORK,给排水工程
+15,FIRE PROTEC WORK,消防工程
+16,SUB TOTAL (A - H),小计 (A - H)
+17,OVERHEAD & PROFIT %,管理费及利润 %
+18,VAT 7%,增值税 7%
+19,GRAND TOTAL,总计
+20,เลขที่ 95/8 หมู่ 1 ต.คลองหนึ่ง อ .คลองหลวง จ .ปทุมธานี 12120 (สํานักงานใหญ่),编号 95/8 村1 空能县 空銮区 巴吞他尼府 12120（总部）
+21,Contractor        บริษัท เฟอร์ คอนสตรัคชั่น จํากัด                                                                                                  Date :    20-04-69,承包商 菲尔建筑工程有限公司
+22,Unit Rate,单价
+23,"ขออนุญาตก่อสร้างเปลี่ยนรูปแบบอาคาร,เปลี่ยนสถาปนิกวิศวกรผู้คุมงาน ,ขออนุญาตเปิดใช้อาคารและที่เกี่ยวข้อง",申请变更建筑形式施工许可、更换监理建筑师工程师、申请启用建筑及相关许可
+24,"Cleaning up construction debris and waste,and cleaning the construction site.",清理建筑垃圾和废料，并清洁施工现场。
+25,ห้ามแทรกบันทัด กรณีไม่พอให้ใปใส่ใน หมวด E,禁止插入行 如空间不足请填入 E 类
+26,TOTAL FOR PRELIMINARY WORK,准备工作合计
+27,Contractor        บริษัท เฟอร์ คอนสตรัคชั่น จํากัด                                                                                           Date :    20-04-69,承包商 菲尔建筑工程有限公司
+28,LAND FILL,填方
+29,PILING WORK,桩基工程
+30,EXCAVATION & FOOTING WORK,土方开挖及基础工程
+31,"SLAB, BEAM ,COLUMN , WALL, RAMP,STAIR",板、梁、柱、墙、坡道、楼梯
+32,STRUCTURAL STEEL AND ROOF STRUCTURE,钢结构及屋面结构
+33,Other items,其他项目
+34,ADDITION WORK,附加工程
+35,TOTAL B STRUCTURAL WORK,结构工程合计 B
+36,Sub Grade filled with Compaction & test as specify in Drawing,路基填筑压实及检测 按图纸要求
+37,Sub Base filled with Compaction & test as specify in Drawing,基层填筑压实及检测 按图纸要求
+38,ห้ามแทรกบันทัด กรณีไม่พอให้ใปใส่ใน หมวด C,禁止插入行 如空间不足请填入 C 类
+39,TOTAL B1 LAND FILL,合计 B1 填方
+40,เสาเข็มคอนกรีตอัดเเรง สี่เหลี่ยมตัน ขนาด 0.35 m ยาว 26.00 m.รับน้ําหนักปลอดภัย 50 ตัน/ต้น,预应力混凝土方桩 规格0.35米 长26.00米 安全承载力50吨/根
+41,Dynamic load test,动力荷载试验
+42,Seismic test,声波完整性检测
+43,TOTAL B2 PILING WORK,合计 B2 桩基工程
+44,EXCAVATION WORK,土方开挖
+45,"Excavation of the soil, making foundations",地基土方开挖
+46,Soil filling works to make foundations.,地基回填土
+47,PILE HEAD CUTTING,截桩头
+48,เสาเข็มคอนกรีตอัดเเรง สี่เหลี่ยมตัน ขนาด 0.35 m,预应力混凝土方桩 规格0.35米
+49,FOOTING WORK,基础工程
+50,COMPACTED SAND,夯实砂层
+51,LEAN CONCRETE,素混凝土垫层
+52,CONCRETEโครงสร้าง 280 กก ./ตร . ซม .(ทรงกระบอกที่28วัน),结构混凝土 280公斤/平方厘米（28天圆柱体）
+53,Steel binding wire,钢筋绑扎丝
+54,TOTAL B 3.1-3.3 FOOTING WORK,合计 B3.1-3.3 基础工程
+55,TOTAL B 3 EXCAVATION & FOOTING WORKS,合计 B3 土方开挖及基础工程
+56,PLASTIC SHEET 0.2 MM. 1 LAYAR,塑料薄膜 0.2毫米 1层
+57,TOTAL B 4.1 SLAB,合计 B4.1 板
+58,TOTAL B 4.2 BEAM,合计 B4.2 梁
+59,RC COLUMN,钢筋混凝土柱
+60,TOTAL B 4.3 COLUMN,合计 B4.3 柱
+61,RC WALL,钢筋混凝土墙
+62,CONCRETEโครงสร้าง 280 กก ./ตร . ซม .(ทรงกระบอกที่28วัน ผสมน้ํายากันซึม),结构混凝土 280公斤/平方厘米（28天圆柱体 掺防水剂）
+63,"WATERSTOP 8""",止水带 8英寸
+64,TOTAL B 4.4 RC WALL,合计 B4.4 钢筋混凝土墙
+65,"Stairs ST1,ST3,RAMP",楼梯 ST1、ST3、坡道
+66,TOTAL B 6.2 stairs,合计 B6.2 楼梯
+67,"TOTAL B4 SLAB, BEAM ,COLUMN , WALL, RAMP,STAIR",合计 B4 板、梁、柱、墙、坡道、楼梯
+68,H-BEAM - 300 x 300 (94 kg/m),H型钢 - 300x300（94公斤/米）
+69,I-BEAM - 600 x 190 (133.0 kg/m),工字钢 - 600x190（133.0公斤/米）
+70,I-BEAM - 450 x 175 (91.7 kg/m),工字钢 - 450x175（91.7公斤/米）
+71,H-BEAM - 200 x 200 (49.9 kg/m),H型钢 - 200x200（49.9公斤/米）
+72,STEEL PLATE JOINT,钢板连接件
+73,I-BEAM - 400 x 150 (95.8 kg/m),工字钢 - 400x150（95.8公斤/米）
+74,C - Light Lip Channel - 125 x 50 x 20 x 3.2,C型轻质卷边槽钢 - 125x50x20x3.2
+75,H-BEAM - 150 x 150 (31.5 kg/m),H型钢 - 150x150（31.5公斤/米）
+76,Rectangular Tube - 100 x 50 x 2.3,矩形管 - 100x50x2.3
+77,CHANNEL - 250 x 90 x 9 (34.6 kg/m),槽钢 - 250x90x9（34.6公斤/米）
+78,Checkered Plate - H-4.5,花纹钢板 - H-4.5
+79,TOTAL B 5 STRUCTURAL STEEL AND ROOF STRUCTURE,合计 B5 钢结构及屋面结构
+80,CONCRETEโครงสร้าง 280 กก ./ตร . ซม .(ทรงกระบอกที่28วัน ),结构混凝土 280公斤/平方厘米（28天圆柱体）
+81,ตัดหัวเสาเข็มคอนกรีตอัดเเรง สี่เหลี่ยมตัน ขนาด 0.35 m,截预应力混凝土方桩桩头 规格0.35米
+82,TOTAL B11 Other items,合计 B11 其他项目
+83,Anchor Bolt M20,地脚螺栓 M20
+84,Expansion Bolt M20,膨胀螺栓 M20
+85,Pipe 76.3x2.8 mm + PL250x250x15 mm + 2Y12x0.85 mm,钢管76.3x2.8毫米 + 钢板250x250x15毫米 + 2Y12x0.85毫米
+86,Gutter L50x50x5 mm ( 3.77 kg / m ),角钢天沟 L50x50x5毫米（3.77公斤/米）
+87,TOTAL ADDITION WORK,附加工程合计
+88,Contractor         บริษัท เฟอร์ คอนสตรัคชั่น จํากัด                                                                                                        Date :    20-04-69,承包商 菲尔建筑工程有限公司
+89,ARCHITECTURAL WORK,建筑工程
+90,ROOF FINISHING & SIDING WORK,屋面及墙面工程
+91,WALL & PARTITION,墙及隔断
+92,FLOOR FINISHING & BASE,地面及踢脚线
+93,Ceiling work,吊顶工程
+94,DOORS & WINDOWS,门窗
+95,SANITARY FIXTURE,卫生洁具
+96,"STAIR WORK,ราวกันตกและราวกันชน , รางน้ํา ,บ่อ Sumppit",楼梯工程、护栏及防撞栏、排水沟、集水坑
+97,EXTERNAL WORK,室外工程
+98,TOTAL C ARCHITECTURAL WORK,合计 C 建筑工程
+99,Stanless Steel Gutter #22,不锈钢天沟 #22
+100,TOTAL C1 ROOF FINISHING & SIDING WORK,合计 C1 屋面及墙面工程
+101,ผนัง คสล . กันดินชั้น1 ทําระบบกันซึม Waterproof Membrane ปิดทับด้วยแผ่นสมาทบร์อด หนา 15 มม .,钢筋混凝土挡土墙 地下一层 做防水卷材防水系统 覆盖15毫米厚水泥板
+102,"ผนัง คสล . ที่เก็บน้ํา,บ่อน้ํา ภายในแต่งผิวเรียบฉาบทําระบบซีเมนต์กันซึมและป้องกันความชื้น",钢筋混凝土蓄水池、水池 内部抹平做水泥基防水防潮系统
+103,"ผนังภายนอกรอบอาคาร ,ห้องเย็นให้ใช้อิฐมวลเบาความหนา 15 ซม .",建筑外围墙、冷库采用加气混凝土砌块 厚度15厘米
+104,ผนังอิฐมวลเบาคามหนา 7.5ซม . งานผนังกันห้องภายในอาคาร,加气混凝土砌块墙 厚度7.5厘米 建筑内部隔墙
+105,"ผนัง3 ผนังและโครงสร้างภายใน ชั้น 1,ชั้น2,ชั้น3 ฉาบปูนเรียบ ทําผิว TOA สกิมโค้ท",墙3 1层、2层、3层内部墙体及结构水泥砂浆抹平 TOA斯金科表面处理
+106,ผนัง4 กรุกระเบื้อง COTTO ลูน่ากลอสไวท์ ขนาด 0.20x0.30 ม . กรุสุง2.40ม . มีเส้นPVCโดยรอบ,墙4 铺贴COTTO Luna Gloss White瓷砖 规格0.20x0.30米 铺贴高度2.40米 四周配PVC收边条
+107,"ผนัง7 ผนังและประตูห้องน้ําWall-Int Hight Presure Laminate (HPL) หนา 10 มม . รวมอุปกรณ์ผนัง,ประตู",墙7 卫生间墙体和门 Wall-Int高压装饰板（HPL）厚度10毫米 含墙面配件及门
+108,ผนัง8 ผนังและโครงสร้างเตรียมผิวเรียบ เพื่อติดตั้งผนังห้องทําความเย็น ความหนา 0.25ม .,墙8 墙体及结构预留平整表面 用于安装冷库墙板 厚度0.25米
+109,เสาเอ็นทับหลัง คสล .,钢筋混凝土构造柱及过梁
+110,TOTAL C2 WALL & PARTITION,合计 C2 墙及隔断
+111,พื้น คสล . ทําระบบกันซึมก่อนเทคอนกรีตพื้นโครงสร้าง,钢筋混凝土板 结构板浇筑前做防水系统
+112,พื้น2 ปูกระเบื้องหินขัดสําเร็จรูป SCG สีขาว 3001 ขนาด 0.30x0.30 ม . หนา30มม . (ชั้น2),地面2 铺贴SCG成品水磨石砖白色3001 规格0.30x0.30米 厚30毫米（2层）
+113,พื้น4โครงสร้างเหล็กชั้น3 ให้เสริมระยะด้วย,地面4 3层钢结构 需加设间距
+114,เหล็ก L- 50x50x5มม .@0.50ม# ปูแผ่นเหล็กcheckered plates หนา4มม . ทาสี,角钢L-50x50x5毫米@0.50米 铺设4毫米厚花纹钢板 刷漆
+115,"พื้น5 ปูกระเบื้อง Kenzai Granite Tile GF-201-10สีบราวนี่ ขนาด0.20 x 0.10 ม .(บันได ST-2,ST-4) รวมราคางานบันได",地面5 铺贴Kenzai花岗岩砖 GF-201-10棕色 规格0.20x0.10米（楼梯ST-2、ST-4）含楼梯工程价格
+116,พื้น6 ปูกระเบื้อง COTTO ชนิดกันลื้น วิลลี่ สีเทา ขนาด 0.30x0.30 ม . (พื้นห้องน้ําชั้น1และชั้น3),地面6 铺贴COTTO防滑砖 Willy灰色 规格0.30x0.30米（1层和3层卫生间地面）
+117,"พื้น8 ทางเท้า ปรับทราย ,เหล็กไวเมท 6มม .@0.20ม .# เทคอนกรีตหนา0.10 ม .,ทําผิวขัดหยาบ เซาะร่อง @ 2.00 ม . (รวมราคางานถนนD2)",地面8 人行道 铺砂调平、钢丝网6毫米@0.20米 浇筑混凝土厚0.10米 做粗拉毛表面 切缝@2.00米（含D2道路工程价格）
+118,พื้น9 ติดตั้งพื้นห้องทําความเย็น ความหนา 0.25ม . งานติดตั้งตามมาตรฐานผู้ผลิต และทําพื้น,地面9 安装冷库地面 厚度0.25米 按厂家标准安装并做地面
+119,คสล . หนา 0.15ม . ทําผิวขัดมัน Floor Hardener Non Metallic 5 Kg/m2 พร้อมน้ํายาเคลือบผิว,钢筋混凝土 厚0.15米 做抛光表面 非金属地面硬化剂5公斤/平方米 配表面涂层液
+120,"พื้น10 ปูกระเบื้องแกรนิโต้ชนิดกันลื้น เทอร์เรเนียม สีเทา ขนาด0.60x0.60 ม . ระบุภายหลัง (พื้นสํานักงาน,ห้องประชุมชั้น3)",地面10 铺贴防滑花岗岩砖 Terrenium灰色 规格0.60x0.60米 后期确定（3层办公室、会议室地面）
+121,บัวเชิงผนังห้องเย็น คสล . หนา0.10ม . สูง0.25ม . ทําผิวขัดมัน,冷库墙脚线 钢筋混凝土 厚0.10米 高0.25米 做抛光表面
+122,"บัวเชิงผนังชั้น3 ที่ห้องสํานักงาน ,ห้องประชุมใช้บัวสําเร็จรูปสีขาวสูง0.10ม .",3层墙脚线 办公室、会议室使用白色成品脚线 高0.10米
+123,TOTAL C3 FLOOR FINISHING & BASE,合计 C3 地面及踢脚线
+124,ฝ้าเพดาน3 ยิบซั่มบรอด หนา 9มม . รอยต่อฉาบเรียบ โครงเคร่าเหล็กชุบสังกะสี  (ถ้ามี),吊顶3 石膏板 厚9毫米 接缝批灰抹平 镀锌轻钢龙骨（如有)
+125,ฝ้าเพดาน4 ยิบซั่มบรอดชนิดกันชื้น หนา 9มม . รอยต่อฉาบเรียบ โครงเคร่าเหล็กชุบสังกะสี,吊顶4 防水石膏板 厚9毫米 接缝批灰抹平 镀锌轻钢龙骨
+126,ฝ้าเพดาน8 ISOWALL ความหนา 0.25ม . สาหรับห้องเย็น งานติดตั้งและโครงตามมาตรฐานผู้ผลิต บริษัทไอ เอ็กซ์ แอล จํากัด,吊顶8 ISOWALL 厚度0.25米 用于冷库 安装及龙骨按IXL有限公司厂家标准
+127,TOTAL C4 Ceiling work,合计 C4 吊顶工程
+128,D1 อลูมิเนียมบานเปิดคู่ ขนาด 3.00x4.38ม .,D1 铝合金双开门 规格3.00x4.38米
+129,D2 อลูมิเนียมบานเปิด ขนาด 3.00x2.55 ม .,D2 铝合金开门 规格3.00x2.55米
+130,D3 บานเปิดUPVC ขนาด 1.60x2.20 ม .,D3 UPVC开门 规格1.60x2.20米
+131,D4 อลูมิเนียมบานเปิด ขนาด 0.90x2.20 ม .,D4 铝合金开门 规格0.90x2.20米
+132,D5 เหล็กกันไฟบานเปิดคู่ ขนาด 2.10x2.05 ม .,D5 防火钢双开门 规格2.10x2.05米
+133,D6 เหล็กกันไฟบานเปิด ขนาด 1.10x2.05 ม .,D6 防火钢开门 规格1.10x2.05米
+134,D7 อลูมิเนียมบานเลื่อน ขนาด 1.60x2.20ม .,D7 铝合金推拉门 规格1.60x2.20米
+135,D7.1 วงกบอลูมิเนียม ขนาด 1.60x2.20ม .,D7.1 铝合金门框 规格1.60x2.20米
+136,D8 บานเปิดUPVC ขนาด 0.90x2.00 ม .,D8 UPVC开门 规格0.90x2.00米
+137,D8.1 บานเปิดUPVC ขนาด 0.70x2.00 ม .,D8.1 UPVC开门 规格0.70x2.00米
+138,D9 อลูมิเนียมบานเปิด ขนาด 1.80x1.65 ม .,D9 铝合金开门 规格1.80x1.65米
+139,D10 อลูมิเนียมบานเปิด ขนาด 0.90x2.00 ม .,D10 铝合金开门 规格0.90x2.00米
+140,D10.1 วงกบอลูมิเนียม ขนาด 0.90x2.00 ม .,D10.1 铝合金门框 规格0.90x2.00米
+141,D11 อลูมิเนียมบานเลื่อน ขนาด 1.60x2.20 ม .,D11 铝合金推拉门 规格1.60x2.20米
+142,D12 อลูมิเนียมบานเปิด ขนาด 1.60x2.20 ม .,D12 铝合金开门 规格1.60x2.20米
+143,D13 ประตูบานเลื่อนสําหรับห้องเย็น ขนาด 1.60x2.20 ม .,D13 冷库推拉门 规格1.60x2.20米
+144,D14 ประตูบานเลื่อนISOWALLโครงเหล็กเหล็ก ขนาด 9.30x10.00 ม .,D14 ISOWALL钢框推拉门 规格9.30x10.00米
+145,D14.1 ประตูบานเลื่อนISOWALLโครงเหล็กเหล็ก ขนาด 4.65x6.00 ม .,D14.1 ISOWALL钢框推拉门 规格4.65x6.00米
+146,D15 ประตูบานเลื่อนISOWALLโครงเหล็กเหล็ก ขนาด 5.75x10.00 ม .,D15 ISOWALL钢框推拉门 规格5.75x10.00米
+147,S1 ประตูเหล็กม้วนไฟฟ้าอัตโนมัติ ขนาด 4.47x5.00 ม .,S1 电动卷帘钢门 规格4.47x5.00米
+148,S2 ประตูม้วนผ้าใบไฟฟ้าอัตโนมัติ ขนาด 4.50x4.55 ม .,S2 电动帆布卷帘门 规格4.50x4.55米
+149,S3 ประตูม้วนผ้าใบไฟฟ้าอัตโนมัติ ขนาด 5.00x4.55 ม .,S3 电动帆布卷帘门 规格5.00x4.55米
+150,S4 ประตูเหล็กม้วนไฟฟ้าอัตโนมัติ ขนาด 8.94x5.00 ม .,S4 电动卷帘钢门 规格8.94x5.00米
+151,S5 ประตูเหล็กม้วนไฟฟ้าอัตโนมัติ ขนาด 3.35x5.00 ม .,S5 电动卷帘钢门 规格3.35x5.00米
+152,W1 อลูมิเนียมบานกระทุ้ง ขนาด 0.60x1.20ม .,W1 铝合金上悬窗 规格0.60x1.20米
+153,W1.1 อลูมิเนียมบานเกล็ดกระทุ้ง ขนาด 0.80x1.85ม .,W1.1 铝合金百叶上悬窗 规格0.80x1.85米
+154,W2 อลูมิเนียมบานกระทุ้ง ขนาด 4.47x0.60ม .,W2 铝合金上悬窗 规格4.47x0.60米
+155,W3 อลูมิเนียมบานกระทุ้ง ขนาด 0.80x0.60ม .,W3 铝合金上悬窗 规格0.80x0.60米
+156,W4 อลูมิเนียมบานเลื่อน ขนาด 1.60x1.10ม .,W4 铝合金推拉窗 规格1.60x1.10米
+157,W5 อลูมิเนียมติดตาย ขนาด 2.30x1.60ม .,W5 铝合金固定窗 规格2.30x1.60米
+158,W6 อลูมิเนียมบานเกล็ดกระจก ขนาด 3.00x1.70ม .,W6 铝合金玻璃百叶窗 规格3.00x1.70米
+159,W6.1 อลูมิเนียมบานเกล็ดอลูมิเนียม ขนาด 0.50x4.00ม .,W6.1 铝合金百叶窗 规格0.50x4.00米
+160,TOTAL C5 DOORS & WINDOWS,合计 C5 门窗
+161,FIREPROOF RESISTANT PAINTING ≥ 3 HR. (500 Micron)  INC. STRUCTURE,防火涂料 ≥3小时（500微米）含结构
+162,TOTAL C6 PAINTING,合计 C6 油漆工程
+163,อ่างล้างหน้าสแตนเลสพร้อมอุปกรณ์สดืออ่างท่อน้ําทิ้งและก๊อกน้ําหรือเทียบเท่าขนาดยาว2.40เมตร,不锈钢洗手台含水槽排水管和龙头或同等品 长2.40米
+164,อ่างล้างหน้าสแตนเลสพร้อมอุปกรณ์สดืออ่างท่อน้ําทิ้งและก๊อกน้ําหรือเทียบเท่าขนาดยาว2.20เมตร,不锈钢洗手台含水槽排水管和龙头或同等品 长2.20米
+165,อ่างล้างหน้าสแตนเลสพร้อมอุปกรณ์สดืออ่างท่อน้ําทิ้งและก๊อกน้ําหรือเทียบเท่าขนาดยาว1.70เมตร,不锈钢洗手台含水槽排水管和龙头或同等品 长1.70米
+166,ก๊อกอ่างล้างหน้า อเมริกันสแตนดาดส์A-TJ63-10 TUBO +สายอ่อนZ403+วาวล์CT179 หรือเทียบเท่า,洗手台龙头 美标A-TJ63-10 TUBO +软管Z403+角阀CT179 或同等品
+167,โถปัสสาวะชาย รุ่น NATASHA C313+ฟัลชวาวล์ TS401DUF พร้อมอุปกรณ์,男士小便器 型号NATASHA C313+冲洗阀TS401DUF 含配件
+168,แผงกั้นโถปัสสาวะ (แบบแขวนผนัง) VERNO ขนาด 1200*550*12มม . รุ่น BP-01,小便器隔板（壁挂式）VERNO 规格1200*550*12毫米 型号BP-01
+169,กล่องใส่กระดาษชําระจัมโบ้โรล Verno รุ่น PQS-OB8001C สีดํา,大卷纸巾盒 Verno 型号PQS-OB8001C 黑色
+170,ก๊อกน้ําและฝักบัวอาบน้ําแบบสาบอ่อน,冷热水混合龙头和花洒
+171,กระจกเงา ขอบอลูมิเนียม ขนาด 1.05x 2.40  ม .,镜面 铝合金边框 规格1.05x2.40米
+172,กระจกเงา ขอบอลูมิเนียม ขนาด 1.05x 2.20 ม .,镜面 铝合金边框 规格1.05x2.20米
+173,กระจกเงา ขอบอลูมิเนียม ขนาด 1.05x 1.70 ม .,镜面 铝合金边框 规格1.05x1.70米
+174,TOTAL C7 SANITARY FOR ARCHITECTURAL WORK,合计 C7 建筑工程卫生洁具
+175,"ลูกตั้ง,ลูกนอน,ชานพักปูกระเบื้อง Kenzai Granite Tile GF-201-10สีบราวนี่ ขนาด0.20 x 0.10 ม .",梯级竖板、踏板、休息平台铺贴Kenzai花岗岩砖 GF-201-10棕色 规格0.20x0.10米
+176,ราวบันไดเหล็ก ทําสี และผนังก่ออิฐฉาบปูน หนา 0.15ม .,铁楼梯扶手 刷漆 及砖砌抹灰墙 厚0.15米
+177,ลูกนอนเหล็กCHECKRED หนา4.5มม . ทาสี,CHECKRED钢板踏板 厚4.5毫米 刷漆
+178,ชานพักเหล็กCHECKRED หนา 4มม . โครงเหล็ก L- 50x50x4.5มม .@0.50ม . ทาสี,CHECKRED钢板休息平台 厚4毫米 角钢骨架L-50x50x4.5毫米@0.50米 刷漆
+179,แม่บันไดเหล็ก C-200x80x7.5มม .(24.60กก ./ม .)ทาสี,钢梯梁 C-200x80x7.5毫米（24.60公斤/米）刷漆
+180,เหล็กยึดแม่บันได Plate 200x150x12มม . และEXP.Bolt 4-M20 ทาสี,梯梁固定钢板200x150x12毫米及膨胀螺栓4-M20 刷漆
+181,ทางเดิน กว้าง1.50ม . ในอาคารระดับ EL.+4.80ม .,走道 宽1.50米 建筑内标高EL.+4.80米
+182,พื้น4 ทางเดิน เหล็ก L- 50x50x5มม .@0.50ม# ปูแผ่นเหล็กcheckered plates หนา4มม . ทาสี รวมในพื้น F4,地面4 走道 角钢L-50x50x5毫米@0.50米 铺设4毫米厚花纹钢板 刷漆 计入地面F4
+183,ผนัง6 สําเร็จรูป ISOWALL ความหนา 0.10ม .(รวมไว้ที่งานผนัง6),墙6 成品ISOWALL 厚度0.10米（已计入墙6项目）
+184,ฝ้าเพดาน7 ISOWALL ความหนา 0.10ม .(รวมไว้ที่งานฝ้าเพดาน7),吊顶7 ISOWALL 厚度0.10米（已计入吊顶7项目）
+185,ช่องSERVICH บานปิดเปิด ขนาด 0.80x0.80ม .,检修口 开关式盖板 规格0.80x0.80米
+186,เหล็กกันเสาที่จอดรถ แบบขยาย 1 แผ่น A3-09,停车场护柱 详图1 图纸A3-09
+187,ผนังกันตก คสล . และราวกันชน ชั้น3 แบบขยาย2 แผ่น A3-09,钢筋混凝土挡墙及防撞栏 3层 详图2 图纸A3-09
+188,"รางน้ําชั้น1 ขนาด0.20x0.20ม . แบบขยาย แผ่น A7-03,A7-04",1层排水沟 规格0.20x0.20米 详图 图纸A7-03、A7-04
+189,"รางน้ําชั้น2 ขนาด0.30x0.30ม . ฝาปิดสแตนเลสแบบขยาย แผ่น A7-05,A7-06",2层排水沟 规格0.30x0.30米 不锈钢盖板 详图 图纸A7-05、A7-06
+190,"รางน้ําชั้น3 ขนาด0.20x0.20ม . แบบขยายแผ่น A7-07,A7-08",3层排水沟 规格0.20x0.20米 详图 图纸A7-07、A7-08
+191,บ่อSumppitชั้น1 ขนาด1.00x1.00ม .,1层集水坑 规格1.00x1.00米
+192,บ่อSumppitชั้น2 ขนาด0.50x0.50ม .,2层集水坑 规格0.50x0.50米
+193,TOTAL C8 STAIR WORK,合计 C8 楼梯工程
+194,"อาคารห้องเครื่องปั่นไฟฟ้า ,อาคารระบบความเย็นของเครื่องจักร",发电机房建筑、机械设备冷却系统建筑
+195,"บ่อพัก,ท่อระบายน้ํา ,รางน้ํา",检查井、排水管、排水沟
+196,TOTAL EXTERNAL WORK,室外工程合计
+197,ผนังภายนอกรอบอาคารให้ใช้อิฐมวลเบาความหนา 15 ซม .,建筑外围墙采用加气混凝土砌块 厚度15厘米
+198,พื้นโครงสร้างทําระบบกันซึม polyurethane coating (water based)  รวมในโครงสร้าง,结构板做防水系统 聚氨酯涂料(水性) 计入结构工程
+199,S1 ประตูเหล็กม้วน ขนาด 2.50x2.55 ม .,S1 卷帘钢门 规格2.50x2.55米
+200,TOTAL D1 FENCE WORK,合计 D1 围墙工程
+201,ขอบคันหิน คสล .RC CURB,钢筋混凝土路缘石 RC CURB
+202,เหล็กJoint 25mm.DB@0.30ม .,传力杆25毫米螺纹钢@0.30米
+203,เหล็กไวเมท 9มม .@0.20ม .#,钢丝网9毫米@0.20米
+204,"พื้น8 ทางเท้า ปรับทราย ,เหล็กไวเมท 6มม .@0.20ม .# เทคอนกรีตหนา0.10 ม .,ทําผิวขัดหยาบ เซาะร่อง @ 2.00 ม .",地面8 人行道 铺砂调平、钢丝网6毫米@0.20米 浇筑混凝土厚0.10米 做粗拉毛表面 切缝@2.00米
+205,TOTAL D2 PAVING WORK,合计 D2 铺装工程
+206,ท่อ คสล . DIA. 1.00 M. ชั้น 2,钢筋混凝土管 直径1.00米 2级
+207,บ่อพัก คสล . 1.50x1.50 ม . FOR RC. PIPE DIA.1.00M.,钢筋混凝土检查井1.50x1.50米 用于钢筋混凝土管直径1.00米
+208,บ่อดักขยะ คสล . 1.50x3.00 ม . FOR RC. PIPE DIA.1.00M.,钢筋混凝土截污井1.50x3.00米 用于钢筋混凝土管直径1.00米
+209,รางน้ํา คสล .,钢筋混凝土排水沟
+210,รางน้ํา คสล . ขนาด 0.30x0.30ม . พร้อมฝาตะแกรง,钢筋混凝土排水沟 规格0.30x0.30米 带格栅盖板
+211,TOTAL D3 DRAINAGE WORK,合计 D3 排水工程
+212,TOTAL D4 MISCELLANEOUS WORK,合计 D4 杂项工程
+213,เลขที่ 95/8 หมู่ 1 ต.คลองหนึ่ง อ . คลองหลวง จ . ปทุมธานี 12120 (สํานักงานใหญ่),编号 95/8 村1 空能县 空銮区 巴吞他尼府 12120（总部）
+214,SUMMARY   Electrical-Communication,电气及通信工程汇总
+215,Main Incomming,主进线
+216,Generator Set,发电机组
+217,Cable Feeder TR To MDB,变压器至主配电柜电缆
+218,"MDB , EMDB ,ATS",主配电柜、应急配电柜、自动转换开关
+219,DISTRIBUTION BOARD,配电箱
+220,LOAD PANEL,负载配电箱
+221,MAIN FEEDER_MDB To FEEDER,主馈线 主配电柜至分配电柜
+222,MAIN FEEDER_DB To SDB,主馈线 配电柜至分配电柜
+223,MAIN FEEDER_LOAD PANEL (LP)To LOAD,主馈线 负载配电箱至负载
+224,LIGHTING FIXTURE,照明灯具
+225,POWER RECEPTACLE,电源插座
+226,LIGHTNING PROTECTION SYSTEM,防雷系统
+227,GROUNDING SYSTEM,接地系统
+228,FIRE ALARM SYSTEM,火灾报警系统
+229,FIRE BARRIER,防火封堵
+230,MAIN FEEDER_DB FOR MACHINE,设备配电柜主馈线
+231,DATA IT. NETWORK SYSTEM,数据IT网络系统
+232,TOTAL (A-Q),合计 (A-Q)
+233,PEA. Co-ordination Fee,地方电力局协调费
+234,DROP OUT FUSE & HV HRC FUSE,跌落式熔断器及高压HRC熔断器
+235,OUTDOOR TERMINATION KITS 25 KV.,室外终端头 25千伏
+236,HV Cable Overhead (MEA To Drop Fuse) XLPE 12/24 KV_95 Sq.mm,高压架空电缆（MEA至跌落熔断器）XLPE 12/24千伏_95平方毫米
+237,HV Cable (Riser Pole To RMU) CU XLPE 12/24 KV_95 SQ.MM,高压电缆（引上杆至RMU）铜芯XLPE 12/24千伏_95平方毫米
+238,Cable RMU To TR_CU XLPE 12/24 KV_95 SQ.MM,电缆 RMU至变压器 铜芯XLPE 12/24千伏_95平方毫米
+239,"IMC CONDUIT 4""",IMC镀锌管 4英寸
+240,OVER HEAD GROUND WIRE 25 SQ.MM.,架空地线 25平方毫米
+241,SUPPORT (PIPE RACK) & FITTING,支架（管架）及配件
+242,ห้ามแทรกบันทัด กรณีไม่พอให้ใปใส่ใน หมวด S,禁止插入行 如空间不足请填入 S 类
+243,Contractor          บริษัท เฟอร์ คอนสตรัคชั่น จํากัด                                                                                           Date :    20-04-69,承包商 菲尔建筑工程有限公司
+244,Sub Total A,小计 A
+245,"Dry Type Transformer 2,000 kVA. 3P,4W,5O Hz.",干式变压器 2000千伏安 三相四线 50赫兹
+246,Terminal Kit For TR.,变压器终端套件
+247,SUB TOTAL B,小计 B
+248,"Generator Set 2000 KVA 230/400V.""Prime Rate W/Sound Proof",发电机组 2000千伏安 230/400V 主用功率 带隔音箱
+249,Float level Switch and Wiring Control,浮球液位开关及接线控制
+250,Fuel 1000 L.For Test & Refill after Test.,燃油1000升 用于测试及测试后加满
+251,SUB TOTAL C,小计 C
+252,Accessories For Cable,电缆附件
+253,_HDPE PN6 Dia 110 mm.,HDPE管 PN6 直径110毫米
+254,"_IMC 4""",IMC镀锌管 4英寸
+255,Support & Fitting,支架及配件
+256,Duck Bank 2x7 Concrete,混凝土排管 2x7
+257,SUB TOTAL D,小计 D
+258,EMDB1 W/CAPACITOR BANK,应急配电柜1 含电容柜
+259,EMDB2 W/CAPACITOR BANK,应急配电柜2 含电容柜
+260,SUB TOTAL E,小计 E
+261,AMCC - CH1,主电机控制中心 - 回路1
+262,AMCC- CH2&CH3,主电机控制中心 - 回路2和3
+263,DB FOR MACHINE,设备配电箱
+264,SUB TOTAL F,小计 F
+265,SUB TOTAL G,小计 G
+266,CABLE_CV 0.6/1 KV.,电力电缆 0.6/1千伏
+267,ACCESSORIES FOR CABLE,电缆附件
+268,CONDUIT_HDPE PN6,HDPE管 PN6
+269,CABLE LADDER,电缆梯架
+270,CABLE TRAY,电缆桥架
+271,SUPPORT & FITTING,支架及配件
+272,SUB TOTAL H,小计 H
+273,SUB TOTAL I,小计 I
+274,SUB TOTAL J,小计 J
+275,EMERGENCY LIGHT,应急灯
+276,EXIT SIGN,安全出口标志
+277,Junction Box,接线盒
+278,SUB TOTAL K,小计 K
+279,JUNCTION BOX,接线盒
+280,SUB TOTAL L,小计 L
+281,AIR TERMINAL_19x600 mm.,避雷针 19x600毫米
+282,COPPER TAPE 25x3(T) mm.,铜带 25x3毫米
+283,BARE COPPER 70 Sq.mm,裸铜线 70平方毫米
+284,CONCRETE INSPECTION PIT,混凝土检查井
+285,GROUND ROD 3/4'' x10 ft.,接地极 3/4英寸x10英尺
+286,EXOTHERMIC WELLDING,放热焊接
+287,SUB TOTAL M,小计 M
+288,GROUNDING FOR MDB,主配电柜接地
+289,GROUNDING FOR GENERATOR,发电机接地
+290,SUB TOTAL N,小计 N
+291,FIRE ALARM CONTROL PANEL,火灾报警控制面板
+292,GRAPHIC ANN,图形显示板
+293,MONITOR MODULE,监视模块
+294,CONTROL MODULE,控制模块
+295,RELAY MODULE,继电器模块
+296,ISOLATE MODULE,隔离模块
+297,SMOKE DETECTOR,感烟探测器
+298,HEAT DETECTOR,感温探测器
+299,CABLE_TWIST PAIR W/SHIELD,屏蔽双绞线电缆
+300,TWIST PAIR W/SHIELD 2C-18 AWG,屏蔽双绞线 2芯-18 AWG
+301,ห้ามแทรกบันทัด กรณีไม่พอให้ใปใส่ใน หมวด Q,禁止插入行 如空间不足请填入 Q 类
+302,"CONDUIT_IMC 1/2""",IMC镀锌管 1/2英寸
+303,SUB TOTAL O,小计 O
+304,SUB TOTAL P,小计 P
+305,SUB TOTAL Q,小计 Q
+306,Main Incomming For Data IT Network Telephone,数据IT网络电话主进线
+307,Conduit+Man hole+Duct Bank,线管+人孔+排管
+308,Main F/O Cable Feeder By Provider,主干光缆由供应商提供
+309,Main Terninal F/O (MTF-1),光纤主干终端 (MTF-1)
+310,Branch For Data IT Network Telephone,数据IT网络电话分支
+311,Conduit+Cable UTP Cat6,线管+UTP Cat6网线
+312,Outlet DATA+TELEPHONE,数据+电话插座
+313,Quality Control Electrical,电气质量控制
+314,Building Automation System (BAS),楼宇自动化系统（BAS）
+315,SUB TOTAL R,小计 R
+316,SUB TOTAL S,小计 S
+317,เลขที่ 95/8 หมู่ 1 ต .คลองหนึ่ง อ .คลองหลวง จ .ปทุมธานี 12120 (สํานักงานใหญ่),编号 95/8 村1 空能县 空銮区 巴吞他尼府 12120（总部）
+318,Contractor         บริษัท เฟอร์ คอนสตรัคชั่น จํากัด                                                                                            Date :     20-04-69,承包商 菲尔建筑工程有限公司
+319,AIR CONDITION AND VENTILATION SYSTEM,空调及通风系统
+320,A/C Main Equipment Work,空调主要设备工程
+321,Fan Coil Unit and Air Handling Unit,风机盘管及空气处理机组
+322,Ventilation and Exhuast Fan,通风及排风扇
+323,Piping Works,管道工程
+324,Valve and Control Valve Class 150,阀门及控制阀 Class 150
+325,Duct Works,风管工程
+326,Electrical Work,电气工程
+327,General Expense,一般费用
+328,Total F1-F8,合计 F1-F8
+329,CH-1                          Water Cooled Chiller centrifugal Type,CH-1 水冷离心式冷水机组
+330,Cap.: 650 RT W/Unit Mounted Starter Panel,容量：650冷吨 带机组安装式启动面板
+331,Chilled Water Flow Rate: 1552 GPM,冷冻水流量：1552加仑/分钟
+332,Chilled Water Temp in / Temp Out : 54/44 oF (12. / 7 oC),冷冻水进/出水温度：54/44°F（12/7°C）
+333,Vibration Isolation / Completed with chiller unit,减振装置 / 与冷水机组配套
+334,CT-1                          Cooling Tower Square Cross Flow Open Type,CT-1 方形横流开式冷却塔
+335,"Condenser Water Flow Rate : 1950 GPM , Fan Motor 7.5x2 kW",冷凝水流量：1950加仑/分钟 风机电机7.5x2千瓦
+336,Condenser Water Temp in / Temp Out : 90/100 0F (32.22/37.78 0C),冷凝水进/出水温度：90/100°F（32.22/37.78°C）
+337,Steel beam and Vibration Isolation,钢梁及减振
+338,Chilled Water and Condenser Water Pump,冷冻水泵及冷凝水泵
+339,Horizontal Spilt Case,水平中开式
+340,"CHWP-1 CAP : 1552 GPM , 30 mH @45 kW",CHWP-1 容量：1552加仑/分钟 扬程30米 @45千瓦
+341,"CDP-1, CAP : 1950 GPM, 25 mH @37 kW",CDP-1 容量：1950加仑/分钟 扬程25米 @37千瓦
+342,Inertia Base with Vibration Isolation,惰性基座带减振
+343,"Water Softener Complete With control panel, Piping, Valve, Brine tank and All Accessories",软水器 含控制面板、管道、阀门、盐水箱及所有配件
+344,"PH & Conductivity Control System Complete with Conductivity Controller,Pump,Solinoid Valv",PH及电导率控制系统 含电导率控制器、泵、电磁阀
+345,Auto Drain line and All Accessories,自动排水管路及所有配件
+346,Chemical Feeder Tank 200 gal Complete with drain valve and insulation,化学加药箱 200加仑 含排水阀及保温
+347,Expansion Tank Cap 1000 Litre w/Insulation accessories,膨胀水箱 容量1000升 含保温配件
+348,Reinforce Concrete Base for Chiller/Cooling Tower/Pump/Softener/EXP Tank,冷水机组/冷却塔/水泵/软水器/膨胀水箱钢筋混凝土基础
+349,(By Civil Works),（由土建工程负责）
+350,ห้ามแทรกบันทัด กรณีไม่พอให้ใปใส่ใน หมวด F9,禁止插入行 如空间不足请填入 F9 类
+351,Sub Total F1,小计 F1
+352,"2-OAU-01     Horizontal Type , Duct Type, CAP : 374,500 BTUH","2-OAU-01 卧式 风管型 容量 : 374,500 BTUH"
+353,"Double Skin , 400 pa EXT SP, complete with pre Filter,Bag Filter,Duct Smoke Detector",双层板 400帕机外静压 含初效过滤器、袋式过滤器、风管感烟探测器
+354,Air leaving temperature 13 C,出风温度 13°C
+355,"3-OAU-01     Horizontal Type , Duct Type, CAP : 535,200 BTUH","3-OAU-01 卧式 风管型 容量 : 535,200 BTUH"
+356,"3-OAU-02     Horizontal Type , Duct Type, CAP : 642,500 BTUH","3-OAU-02 卧式 风管型 容量 : 642,500 BTUH"
+357,"Double Skin , 400 pa EXT SP, complete with pre Filter,Bag Filter, Duct Smoke Detector",双层板 400帕机外静压 含初效过滤器、袋式过滤器、风管感烟探测器
+358,"2-AC-01       Ceiling Duct Type, CAP : 125,840 BTUH","2-AC-01 吊顶风管型 容量 : 125,840 BTUH"
+359,"Single Skin , 150 pa EXT SP , complete with pre Filter,",单层板 150帕机外静压 含初效过滤器
+360,"2-AC-02       Ceiling Duct Type, CAP : 157,940 BTUH","2-AC-02 吊顶风管型 容量 : 157,940 BTUH"
+361,Unpacked Rm,拆包间
+362,"2-AC-03       Ceiling Duct Type, CAP : 157,940 BTUH","2-AC-03 吊顶风管型 容量 : 157,940 BTUH"
+363,Preparing Rm,准备间
+364,"2-AC-04       Ceiling Duct Type, CAP : 125,840 BTUH","2-AC-04 吊顶风管型 容量 : 125,840 BTUH"
+365,Warmed Rm,加热间
+366,"2-AC-05       Ceiling Suspended Type, CAP : 51,600 BTUH","2-AC-05 吊顶悬挂型 容量 : 51,600 BTUH"
+367,Chilled Rm,冷藏间
+368,"2-AC-06       Ceiling Duct Type, CAP : 125,840 BTUH","2-AC-06 吊顶风管型 容量 : 125,840 BTUH"
+369,"2-AC-07/1     Ceiling Duct Type, CAP : 157,940 BTUH","2-AC-07/1 吊顶风管型 容量 : 157,940 BTUH"
+370,"2-AC-07/2 to 3 Horizontal Type , Duct Type, CAP : 358,190 BTUH","2-AC-07/2至3 卧式 风管型 容量：358,190 BTU/小时"
+371,"Single Skin , 250 pa EXT SP , complete with pre Filter, Duct Smoke Detector",单层板 250帕机外静压 含初效过滤器、风管感烟探测器
+372,"2-AC-07/4     Horizontal Type , Duct Type, CAP : 404,340 BTUH","2-AC-07/4 卧式 风管型 容量 : 404,340 BTUH"
+373,"2-AC-07/5     Horizontal Type , Duct Type, CAP : 254,370 BTUH","2-AC-07/5 卧式 风管型 容量 : 254,370 BTUH"
+374,"2-AC-08/1 to 3 Horizontal Type , Duct Type, CAP : 254,370 BTUH","2-AC-08/1至3 卧式 风管型 容量：254,370 BTU/小时"
+375,"3-AC-01 to 02  Ceiling Suspended Type, CAP : 51,600 BTUH","3-AC-01 to 02  吊顶悬挂型 容量 : 51,600 BTUH"
+376,Electrical Rm,电气间
+377,"3-AC-02/1 to 02Ceiling Duct Type, CAP : 157,940 BTUH","3-AC-02/1至02 吊顶风管型 容量：157,940 BTU/小时"
+378,Meeting Rm 1,会议室1
+379,"3-AC-03       Ceiling Duct Type, CAP : 125,840 BTUH","3-AC-03 吊顶风管型 容量 : 125,840 BTUH"
+380,"Single Skin , 150 pa EXT SP , complete with pre Filter",单层板 150帕机外静压 含初效过滤器
+381,Meeting Rm 2,会议室2
+382,"3-AC-04       Ceiling Duct Type, CAP : 157,940 BTUH","3-AC-04 吊顶风管型 容量 : 157,940 BTUH"
+383,QC Office,质检办公室
+384,"3-AC-05       Ceiling Suspended Type, CAP : 51,600 BTUH","3-AC-05 吊顶悬挂型 容量 : 51,600 BTUH"
+385,"3-AC-06       Ceiling Duct Type, CAP : 125,840 BTUH","3-AC-06 吊顶风管型 容量 : 125,840 BTUH"
+386,QC Lab,质检实验室
+387,"3-AC-07/1 to 2 Ceiling Duct Type, CAP : 157,940 BTUH","3-AC-07/1至2 吊顶风管型 容量：157,940 BTU/小时"
+388,Production rm,生产车间
+389,"3-AC-08/1 to 3 Ceiling Duct Type, CAP : 157,940 BTUH","3-AC-08/1至3 吊顶风管型 容量：157,940 BTU/小时"
+390,"3-AC-09/1 to 2 Horizontal Type , Duct Type, CAP : 358,190 BTUH","3-AC-09/1至2 卧式 风管型 容量：358,190 BTU/小时"
+391,"Steel Hanger, Spring hanger and Supports",钢吊架、弹簧吊架及支架
+392,Reinforce Concrete Base for AHU,空气处理机组钢筋混凝土基础
+393,Sub Total F2,小计 F2
+394,"Propeller Fan wall mounted wih Net,Shutter, Rain Hood",轴流风机 壁挂式 带网罩、百叶、防雨罩
+395,"1-EF-05       1000 CMH, 10 pa, 45 Watt     Sump Pit Room",集水坑间
+396,"1-EF-06       1000 CMH, 10 pa, 45 Watt     Sump Pit Room",集水坑间
+397,"1-EF-07       2000 CMH, 10 pa, 450 Watt    Pump room",水泵房
+398,"1-EF-08       5000 CMH, 10 pa, 450 Watt    Chiller rm",冷水机组间
+399,"1-EF-09/1 to 16 20000 CMH, 50 pa, 1650 Watt  1st FL (Future)",1-EF-09/1至16 20000立方米/小时 50帕 1650瓦 1层（预留）
+400,"2-EF-09/1 to 12 20000 CMH, 50 pa, 1650 Watt  2nc FL (Future)",2-EF-09/1至12 20000立方米/小时 50帕 1650瓦 2层（预留）
+401,"3-EF-01/1 to 3 20000 CMH, 50 pa, 1650 Watt  3rd FL (Future)",3-EF-01/1至3 20000立方米/小时 50帕 1650瓦 3层（预留）
+402,Steel Frame and Support,钢架及支架
+403,Jet fan,射流风机
+404,"1-JF-01/1 to 13 13000 CMH, 10 pa, 3000 Watt  1st FL (Future)",1-JF-01/1至13 13000立方米/小时 10帕 3000瓦 1层（预留）
+405,"Centrifugal fan , Belt Drive , Forward curve",离心风机 皮带传动 前弯叶片
+406,"1-EF-01       1,600 CMH, 1.5 kW           F Toilrt","1-EF-01 1,600 CMH, 1.5 kW           女卫生间"
+407,"1-EF-02       1,600 CMH, 1.5 kW           M Toilet","1-EF-02 1,600 CMH, 1.5 kW           男卫生间"
+408,"1-EF-03       1,600 CMH, 1.5 kW           M Toilet","1-EF-03 1,600 CMH, 1.5 kW           男卫生间"
+409,"1-EF-04       1,600 CMH, 1.5 kW           F Toilet","1-EF-04 1,600 CMH, 1.5 kW           女卫生间"
+410,Mini Sirrocco,迷你西罗克风机
+411,"3-EF-01       900 CMH, 340 Watt           F Toilet","3-EF-01 900 CMH, 340 Watt           女卫生间"
+412,"3-EF-02       900 CMH, 340 Watt           M Toilet","3-EF-02 900 CMH, 340 Watt           男卫生间"
+413,"3-EF-03       900 CMH, 340 Watt           M Toilet","3-EF-03 900 CMH, 340 Watt           男卫生间"
+414,"3-EF-04       900 CMH, 340 Watt           F Toilet","3-EF-04 900 CMH, 340 Watt           女卫生间"
+415,Reinforce Concrete Base for Centrifugal Fan (By Civil Works),（由土建工程负责）
+416,Sub Total F3,小计 F3
+417,"Chilled Water Pipe, A53 Gr A Black Steel Pipe SCh.40 (ERW Seamed)",冷冻水管 A53 Gr A 黑钢管 Sch.40（ERW焊接）
+418,Pipe Fitting and Connectors,管件及连接件
+419,"Pipe Hangers, Support and sleeves",吊架、支架及套管
+420,Pipe Paintting and Coating,管道油漆及涂层
+421,"Condenser Water Pipe, Black Steel Pipe SCh.40 (ERW Seamed)",冷凝水管 黑钢管 Sch.40（ERW焊接）
+422,"Make Up Water Pipe, Drain Pipe from Cooling Tower & Make Up Water to Expansion Tanks",补水管道、冷却塔排水管及膨胀水箱补水管
+423,Galvanized Steel Pipe Medium Weight Conform to TIS277-2532 or BS 1387,镀锌钢管 中重 符合TIS277-2532或BS 1387
+424,Condensate Drain Pipe from AHU/FCU/Cooling Tower,空气处理机组/风机盘管/冷却塔冷凝排水管
+425,Closed Cell Foamed Elastomer Insulation,闭泡弹性泡沫保温
+426,15 mm g            20 mm THK   A/C Drainage,15 mm g            20 mm THK   A/C Drainage
+427,20 mm g            20 mm THK   A/C Drainage,20 mm g            20 mm THK   A/C Drainage
+428,25 mm g            20 mm THK   A/C Drainage,25 mm g            20 mm THK   A/C Drainage
+429,50 mm g            20 mm THK   A/C Drainage,50 mm g            20 mm THK   A/C Drainage
+430,15 mm g            31 mm THK,15 mm g            31 mm THK
+431,20 mm g            32 mm THK,20 mm g            32 mm THK
+432,25 mm g            33 mm THK,25 mm g            33 mm THK
+433,32 mm g            32 mm THK,32 mm g            32 mm THK
+434,40 mm g            40 mm THK,40 mm g            40 mm THK
+435,50 mm g            40 mm THK,50 mm g            40 mm THK
+436,65 mm g            50 mm THK,65 mm g            50 mm THK
+437,80 mm g            51 mm THK,80 mm g            51 mm THK
+438,150 mm g          50 mm THK,150 mm g          50 mm THK
+439,200 mm g          50 mm THK,200 mm g          50 mm THK
+440,250 mm g          50 mm THK,250 mm g          50 mm THK
+441,400 mm g          50 mm THK,400 mm g          50 mm THK
+442,500 mm g          50 mm THK,500 mm g          50 mm THK
+443,Adhesive and all accessories,胶粘剂及所有配件
+444,Sub Total F4,小计 F4
+445,Butterfly Valve Lugged Type W/Lever Operator,对夹式蝶阀 带手柄操作
+446,250 mm g W/Gear operator,250毫米 带齿轮操作器
+447,Pressure relief valve at bypass,旁通泄压阀
+448,Double Check Valve,双止回阀
+449,20 mm g            Rubber,20 mm g            Rubber
+450,40 mm g            Rubber,40 mm g            Rubber
+451,50 mm g            Rubber,50 mm g            Rubber
+452,65 mm g            Rubber,65 mm g            Rubber
+453,80 mm g            Rubber,80 mm g            Rubber
+454,200 mm g          Rubber,200 mm g          Rubber
+455,250 mm g          Rubber,250 mm g          Rubber
+456,450 mm g          SUS 30 CM Length,450 mm g          SUS 30 CM Length
+457,2-Way control valve (ON-OFF),两通控制阀（开关型）
+458,2-Way control valve (Proportional),两通控制阀（比例型）
+459,Electronic Flow Swith and wiring,电子流量开关及接线
+460,Thermo Guage and Well,温度计及套管
+461,"Pressure Guage size 4"" DIA with needle valve","Pressure Guage size 4"" DIA with needle valve"
+462,"Flange, Bolt,Nut and gasket",法兰、螺栓、螺母及垫片
+463,LCD Room T' STAT,LCD房间温控器
+464,Sub Total F5,小计 F5
+465,A/C Galvanized Steel Sheet Guage,空调镀锌钢板 规格号
+466,Guage #26,规格号 #26
+467,Guage #24,规格号 #24
+468,Guage #22,规格号 #22
+469,"Round duct dia, 800 mm",圆形风管直径800毫米
+470,"Round duct dia, 1000 mm",圆形风管直径1000毫米
+471,Duct support and Hanger,风管支撑及吊架
+472,V/T Galvanized Steel Sheet Guage,垂直/水平镀锌钢板规格号
+473,Fabric Duct W/accesories,布质风管含配件
+474,Canvas Joint,帆布接头
+475,"Duct Insulation : Fiberglass 50 mmTHK , 24 kg/m3","Duct Insulation : Fiberglass 50 mmTHK , 24 kg/m3"
+476,"Diffuser,Griile and Register",散流器、格栅及风口
+477,Exhuast Air Grille w/VD (EAG),排风格栅带风量调节阀
+478,Ceiling Diffuser,天花板散流器
+479,Dew Point Temperature Sensor for OAU,室外空气处理机组露点温度传感器
+480,"accuracy ±0.3C, Probe length 300 mm","accuracy ±0.3C, Probe length 300 mm"
+481,Sub Total F6,小计 F6
+482,"Electrical Control Panel Board, Starter, Control Equipment Complete Wiring, Conduit",电气控制面板、启动器、控制设备 含完整接线及线管
+483,"Type of starter (VSD,DOL,Y-D) follow Load Schedule and all accessories.",启动器类型（变频、直启、星三角）按负载表 含所有配件
+484,Starter Panel / Control Panel,启动器面板/控制面板
+485,1-ST-01       (Hanging Type) For 1-EF-05   Sump pump room,1-ST-01 (Hanging Type) 用于1-EF-05 集水坑间
+486,1-ST-02       (Hanging Type) For 1-EF-01   Male toilet,男卫生间
+487,1-ST-03       (Hanging Type) For 1-EF-02   Female toilet,女卫生间
+488,1-ST-04       (Hanging Type) For 1-EF-03   Male toilet,男卫生间
+489,1-ST-05       (Hanging Type) For 1-EF-04   Female toilet,女卫生间
+490,1-ST-06       (Hanging Type) For 1-EF-06   Sump pump room,1-ST-06 (Hanging Type) 用于1-EF-06 集水坑间
+491,1-ST-07       (Hanging Type) For 1-EF-08   Chiller plant,1-ST-07 (Hanging Type) 用于1-EF-08 冷水机房
+492,1-ST-18       (Hanging Type) For 1-EF-07   Pump room,水泵房
+493,1-ST-19       (Hanging Type) For 1-EF-18   Room near cooling tower,1-ST-19 (Hanging Type) 用于1-EF-18 冷却塔附近房间
+494,2-ST-01       (Hanging Type) For 2-AC-01   W/Thermostat,2-ST-01 (Hanging Type) For 2-AC-01   W/Thermostat
+495,2-ST-02       (Hanging Type) For 2-AC-02   W/Thermostat,2-ST-02 (Hanging Type) For 2-AC-02   W/Thermostat
+496,2-ST-03       (Hanging Type) For 2-AC-03   W/Thermostat,2-ST-03 (Hanging Type) For 2-AC-03   W/Thermostat
+497,2-ST-04       (Hanging Type) For 2-AC-04   W/Thermostat,2-ST-04 (Hanging Type) For 2-AC-04   W/Thermostat
+498,2-ST-05       (Hanging Type) For 2-AC-05   W/Thermostat,2-ST-05 (Hanging Type) For 2-AC-05   W/Thermostat
+499,2-ST-06       (Hanging Type) For 2-AC-06   W/Thermostat,2-ST-06 (Hanging Type) For 2-AC-06   W/Thermostat
+500,2-ST-07/1     (Hanging Type) For 2-AC-07/1 W/Thermostat,2-ST-07/1 (Hanging Type) For 2-AC-07/1 W/Thermostat
+501,2-ST-07/2     (Hanging Type) For 2-AC-07/2 W/Thermostat and duct smoke detector,2-ST-07/2 (Hanging Type) For 2-AC-07/2 W/Thermostat and duct smoke detector
+502,2-ST-07/3     (Hanging Type) For 2-AC-07/3 W/Thermostat and duct smoke detector,2-ST-07/3 (Hanging Type) For 2-AC-07/3 W/Thermostat and duct smoke detector
+503,2-ST-07/4     (Hanging Type) For 2-AC-07/4 W/Thermostat and duct smoke detector,2-ST-07/4 (Hanging Type) For 2-AC-07/4 W/Thermostat and duct smoke detector
+504,2-ST-07/5     (Hanging Type) For 2-AC-07/5 W/Thermostat and duct smoke detector,2-ST-07/5 (Hanging Type) For 2-AC-07/5 W/Thermostat and duct smoke detector
+505,2-ST-08/1     (Hanging Type) For 2-AC-08/1 W/Thermostat and duct smoke detector,2-ST-08/1 (Hanging Type) For 2-AC-08/1 W/Thermostat and duct smoke detector
+506,2-ST-08/2     (Hanging Type) For 2-AC-08/2 W/Thermostat and duct smoke detector,2-ST-08/2 (Hanging Type) For 2-AC-08/2 W/Thermostat and duct smoke detector
+507,2-ST-08/3     (Hanging Type) For 2-AC-08/3 W/Thermostat and duct smoke detector,2-ST-08/3 (Hanging Type) For 2-AC-08/3 W/Thermostat and duct smoke detector
+508,2-ST-001      (Hanging Type) For 2-OAU-01 W/Thermostat and duct smoke detector,2-ST-001 (Hanging Type) For 2-OAU-01 W/Thermostat and duct smoke detector
+509,3-ST-01       (Hanging Type) For 3-AC-01/1 t W/Thermostat,3-ST-01 (Hanging Type) 用于3-AC-01/1 带温控器
+510,3-ST-02       (Hanging Type) For 3-AC-02/1 t W/Thermostat,3-ST-02 (Hanging Type) 用于3-AC-02/1 带温控器
+511,3-ST-03       (Hanging Type) For 3-AC-03   W/Thermostat,3-ST-03 (Hanging Type) For 3-AC-03   W/Thermostat
+512,3-ST-04       (Hanging Type) For 3-AC-04   W/Thermostat,3-ST-04 (Hanging Type) For 3-AC-04   W/Thermostat
+513,3-ST-05       (Hanging Type) For 3-AC-05   W/Thermostat,3-ST-05 (Hanging Type) For 3-AC-05   W/Thermostat
+514,3-ST-06       (Hanging Type) For 3-AC-06   W/Thermostat,3-ST-06 (Hanging Type) For 3-AC-06   W/Thermostat
+515,3-ST-07       (Hanging Type) For 3-AC-07/1 t W/Thermostat,3-ST-07 (Hanging Type) 用于3-AC-07/1 带温控器
+516,3-ST-08       (Hanging Type) For 3-AC-08/1 t W/Thermostat,3-ST-08 (Hanging Type) 用于3-AC-08/1 带温控器
+517,3-ST-09       (Hanging Type) For 3-AC-09/1 t W/Thermostat and duct smoke detector,3-ST-09 (Hanging Type) 用于3-AC-09/1 带温控器及风管感烟探测器r
+518,3-ST-001      (Hanging Type) For 3-OAU-01 W/Thermostat and duct smoke detector,3-ST-001 (Hanging Type) For 3-OAU-01 W/Thermostat and duct smoke detector
+519,3-ST-002      (Hanging Type) For 3-OAU-02 W/Thermostat and duct smoke detector,3-ST-002 (Hanging Type) For 3-OAU-02 W/Thermostat and duct smoke detector
+520,Reinforce Concrete Base for Floor Mounting Panel (By Civil Works),落地安装面板钢筋混凝土基础（由土建工程负责）
+521,Variable Speed Drive IP 54,变频器 IP54
+522,37 kW         for Condenser Water Pump,37 kW         for Condenser Water Pump
+523,45 kW         for Chilled Water Pump,45 kW         for Chilled Water Pump
+524,XLPE (0.1/6KV) 1C,XLPE (0.1/6千伏) 单芯
+525,Cable Tray W/Cover,带盖电缆桥架
+526,IMC Conduit,IMC镀锌管
+527,Flexible Connector (W/P),柔性连接器（防水型）
+528,Control cable from remote starter to chiller control panel,从远程启动器到冷水机组控制面板的控制电缆
+529,Sub Total F7,小计 F7
+530,Site Expense,现场费用
+531,Test & Commisssioning,测试及调试
+532,Sub Total F8,小计 F8
+533,Water Supply and Drainage System,给排水系统
+534,Main Equipment Work,主要设备工程
+535,Rain Drainage Works,雨水排水工程
+536,Total G1-G5,合计 G1-G5
+537,1-PWP-01     Packaged Booster Pump (For Toilet),1-PWP-01 Packaged Booster Pump (For Toilet)
+538,"Cap.: 2x270 LPM @40 mH, 1000 L tank",容量：2x270升/分钟 @40米扬程 1000升水箱
+539,W/Control Panel & Electrode,带控制面板及电极
+540,1-PWP-02     Packaged Booster Pump (For Softener),1-PWP-02 Packaged Booster Pump (For Softener)
+541,"Cap.: 2x220 LPM @45 mH, 1000 L tank",容量：2x220升/分钟 @45米扬程 1000升水箱
+542,1-SP-01       Submersible Pump,1-SP-01 Submersible Pump
+543,"Cap.: 2x180 LPM @6 mH w/control panel,Floating switch,guide rail",容量：2x180升/分钟 @6米扬程 带控制面板、浮球开关、导杆
+544,1-SP-02       Submersible Pump,1-SP-02 Submersible Pump
+545,1-SP-03       Submersible Pump,1-SP-03 Submersible Pump
+546,"Cap.: 2x180 LPM @10 mH w/Control panel,Floating switch,guide rail",容量：2x180升/分钟 @10米扬程 带控制面板、浮球开关、导杆
+547,E-ST-01       Septic Tank W/Air Compressor,E-ST-01 Septic Tank W/Air Compressor
+548,Cap.: 30 m3/day,容量：30立方米/天
+549,E-ST-02       Septic Tank W/Air Compressor,E-ST-02 Septic Tank W/Air Compressor
+550,Cap.: 20 m3/day,容量：20立方米/天
+551,E-ST-03       Septic Tank W/Air Compressor,E-ST-03 Septic Tank W/Air Compressor
+552,E-DP-01      Drainage Pump,E-DP-01 Drainage Pump
+553,"Cap.: 200 LPM @ mH w/Control panel,Floating switch,guide rail",容量：200升/分钟 @米扬程 带控制面板、浮球开关、导杆
+554,E-DP-02      Drainage Pump,E-DP-02 Drainage Pump
+555,Piling & Concrete Base for Septic Tanks ( By Civil Works),化粪池桩基及混凝土基础（由土建工程负责）
+556,Concrete Pit for Drainage&Sewage pump (By Civil Works),（由土建工程负责）
+557,Grease trap for Drainage&Sewage pump (By Civil Works),（由土建工程负责）
+558,ห้ามแทรกบันทัด กรณีไม่พอให้ใปใส่ใน หมวด G6,禁止插入行 如空间不足请填入 G6 类
+559,Sub Total G1,小计 G1
+560,Water Supply Piping GSP (BS-M),给水管道 镀锌钢管（BS-M）
+561,"Pipe Hangers, Support",吊架、支架
+562,Water Supply Piping PE PN6,给水管道 PE PN6
+563,Drainage Piping PE PN6,排水管道 PE PN6
+564,65 mm g              Soil,65 mm g              Soil
+565,80 mm g              Soil,80 mm g              Soil
+566,50 mm g              Process,50 mm g              Process
+567,65 mm g              Process,65 mm g              Process
+568,Excavation & Backfill,开挖及回填
+569,Waste Piping PVC Class 8.5,废水管 PVC Class 8.5
+570,100 mm g          Process,100 mm g          Process
+571,Soil Piping PVC Class 8.5,污水管 PVC Class 8.5
+572,Vent Piping PVC Class 8.5,透气管 PVC Class 8.5
+573,Flexible Connector (Rubber)-Drainage,柔性连接器
+574,Sleeve Works for Drainage Works,排水工程套管
+575,Sub Total G2,小计 G2
+576,250 mm g          (inspection pit),250 mm g          (inspection pit)
+577,Floating Modulating Valve,浮球调节阀
+578,Water hammer arrester,水锤消除器
+579,Floor Drain (Water Proof),地漏（防水型）
+580,Vent Cap,通气帽
+581,Water meter,水表
+582,Tube sight glass (water level),管式视镜（水位）
+583,Sub Total G3,小计 G3
+584,Rain Drainage Piping PVC Class 18.5,雨水排水管 PVC Class 18.5
+585,Sub Total G4,小计 G4
+586,Sub Total G5,小计 G5
+587,Contractor         บริษัท เฟอร์ คอนสตรัคชั่น จํากัด                                                                                         Date :    20-04-69,承包商 菲尔建筑工程有限公司
+588,Fire Protection System,消防系统
+589,Equipment works,设备工程
+590,Total H1-H5,合计 H1-H5
+591,FP-01 Horizontal Spilt case Diesel Engine Driven Fire Pump,FP-01 水平中开式柴油机驱动消防泵
+592,Capacity 1250 GPM@ 100 mH,容量1250加仑/分钟@100米扬程
+593,Fuel Tank 600 Litre,燃油箱 600升
+594,Fire Pump Control Panel,消防泵控制面板
+595,Fitting for fire pump,消防泵配件
+596,Main relief valve size (Angle type) 150 mm Ø,主泄压阀（角式）150毫米
+597,Overflow cone size 150x200 mm Ø,溢流锥管 150x200毫米
+598,Main relief valve size (Angle type) 50 mm Ø,主泄压阀（角式）50毫米
+599,Flow Meter (Venturi Type) 150 mm Ø,流量计（文丘里型）150毫米
+600,Discharge and Suction Pressure Guage,出水及吸水压力表
+601,JP-01 Vertical Multistage in-line Jockey Pump,JP-01 立式多级管道式稳压泵
+602,Capacity 25 GPM@ 105 mH,容量25加仑/分钟@105米扬程
+603,Electrical Motor 7.5 HP 2900 RPM,电机 7.5马力 2900转/分
+604,Jockey Pump Control Panel,稳压泵控制面板
+605,Sub Total H2,小计 H2
+606,Black Steel Pipe SCh.40 GR.B Seamless,黑钢管 Sch.40 GR.B 无缝
+607,ห้ามแทรกบันทัด กรณีไม่พอให้ใปใส่ใน หมวด H4,禁止插入行 如空间不足请填入 H4 类
+608,Valve and Control Valve Class 175,阀门及控制阀 Class 175
+609,O.S. & Y Gate Valve 175 Psi,闸阀
+610,Alarm Valve (Wet Type) and accessories,报警阀（湿式）及配件
+611,Sprinkler Head,洒水喷头
+612,"Upright Head, K = 242, Temp = 79 oC        (Include spare 25 set)",直立喷头 K=242 温度79°C（含备件25个）
+613,"Upright Head, K = 80.6, Temp = 79 oC       (Include spare 25 set)",直立喷头 K=80.6 温度79°C（含备件25个）
+614,Fire Department Connection,消防车连接器
+615,"Flexible Connector (SUS), Length = 30 cm",柔性连接器（不锈钢）长度=30厘米
+616,Indoor Fire Hose Cabinet /w pressure restricted valve,室内消防栓箱 带限压阀
+617,Dry Chemical Portable Fire Extinguisher @4.5 kG,干粉手提式灭火器 @4.5公斤
+618,CO2 Portable Fire Extinguisher @4.5 kG,CO2手提式灭火器 @4.5公斤
+619,Test Drain Station,试水排水站
+620,"Pressure Gauge size 4"" DIA with needle valve",压力表 4英寸表盘 带针形阀
+621,Ball Valve     15 mm Ø,球阀 15毫米
+622,Gate Valve    25 mm Ø,闸阀
+623,Sight Glass    25 mm Ø,视镜
+624,"Flange, Bolt,Nut and Gasket",法兰、螺栓、螺母及垫片
+625,"Wiring & Conduit ( alarm ,supervisoey switch F/A Panel) by Electrical Works",接线及线管（报警、监视开关至火灾报警面板）由电气工程负责
+626,Sub Total H3,小计 H3
+627,X-Lift Rental,X-Lift 租赁
+628,Sub Total H4,小计 H4

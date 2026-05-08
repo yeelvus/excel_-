@@ -24,6 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent
 EXCEL_SUFFIXES = {'.xlsx', '.xlsm', '.xltx', '.xltm'}
 TRANS_JSON = BASE_DIR / '翻译对照.json'
 OUTPUT_DIR = BASE_DIR / '4_输出文件excel'
+REPLACEMENT_REPORT_JSON = '翻译替换报告.json'
 
 
 def parse_args() -> argparse.Namespace:
@@ -49,8 +50,8 @@ def parse_args() -> argparse.Namespace:
 
 
 def _norm(text: str) -> str:
-    """NFC 归一化 + 折叠空白，用于模糊匹配。"""
-    t = unicodedata.normalize("NFC", text.strip())
+    """NFKC 归一化 + 折叠空白，兼容泰语表现形式字符（如 ）差异。"""
+    t = unicodedata.normalize("NFKC", text.strip())
     return re.sub(r"\s+", " ", t)
 
 
@@ -92,12 +93,17 @@ def build_lookup(path: Path) -> tuple[dict[str, str], dict[str, str], list[str]]
         if orig and trans:
             exact[orig] = trans
 
-    # 归一化 lookup（NFC + 折叠空白）
+    # 归一化 lookup（NFKC + 折叠空白）
     norm: dict[str, str] = {}
     for orig, trans in exact.items():
         nk = _norm(orig)
         if nk not in norm:
             norm[nk] = trans
+
+        # 兼容回退：收录 NFC 形态，避免历史数据中混用不同规范化形式
+        nfc_key = re.sub(r"\s+", " ", unicodedata.normalize("NFC", orig.strip()))
+        if nfc_key and nfc_key not in norm:
+            norm[nfc_key] = trans
 
     # 按 key 长度降序，用于子串替换时优先匹配较长条目
     sorted_norm_keys = sorted(norm.keys(), key=len, reverse=True)
@@ -110,11 +116,15 @@ def replace_multiline_text(
     exact: dict[str, str],
     norm: dict[str, str],
     sorted_norm_keys: list[str],
-) -> tuple[str, int]:
+) -> tuple[str, int, int, int, list[str]]:
     normalized = text.replace('\r\n', '\n').replace('\r', '\n')
     parts = normalized.split('\n')
     replaced = 0
+    exact_hits = 0
+    norm_hits = 0
+    substring_hits = 0
     new_parts: list[str] = []
+    unmatched_lines: list[str] = []
 
     for part in parts:
         stripped = part.strip()
@@ -131,6 +141,7 @@ def replace_multiline_text(
         if stripped in exact:
             new_parts.append(f"{prefix}{exact[stripped]}{suffix}")
             replaced += 1
+            exact_hits += 1
             continue
 
         # 2. 归一化精确匹配（NFC + 折叠空白）
@@ -138,6 +149,7 @@ def replace_multiline_text(
         if nk in norm:
             new_parts.append(f"{prefix}{norm[nk]}{suffix}")
             replaced += 1
+            norm_hits += 1
             continue
 
         # 3. 子串替换：把归一化后的行文本里包含的所有 key 依次替换
@@ -153,12 +165,15 @@ def replace_multiline_text(
         if sub_count:
             new_parts.append(f"{prefix}{result}{suffix}")
             replaced += sub_count
+            substring_hits += sub_count
         else:
             new_parts.append(part)
+            if any(ch.isalpha() for ch in stripped) or re.search(r"[\u0e00-\u0e7f]", stripped):
+                unmatched_lines.append(stripped)
 
     if replaced == 0:
-        return text, 0
-    return '\n'.join(new_parts), replaced
+        return text, 0, 0, 0, unmatched_lines
+    return '\n'.join(new_parts), exact_hits, norm_hits, substring_hits, unmatched_lines
 
 
 def translate_workbook(
@@ -167,9 +182,16 @@ def translate_workbook(
     exact: dict[str, str],
     norm: dict[str, str],
     sorted_norm_keys: list[str],
-) -> int:
+) -> tuple[dict[str, int], list[dict[str, str]]]:
     wb = load_workbook(src, data_only=False)
-    count = 0
+    stats = {
+        'exact_hits': 0,
+        'norm_hits': 0,
+        'substring_hits': 0,
+        'total_replacements': 0,
+        'unmatched_cells': 0,
+    }
+    unmatched_cells: list[dict[str, str]] = []
     for ws in wb.worksheets:
         for row in ws.iter_rows():
             for cell in row:
@@ -181,14 +203,81 @@ def translate_workbook(
                 if isinstance(val, str) and val.lstrip().startswith('='):
                     continue
                 if isinstance(val, str):
-                    replaced_text, replaced_count = replace_multiline_text(
+                    replaced_text, exact_hits, norm_hits, substring_hits, unmatched_lines = replace_multiline_text(
                         val, exact, norm, sorted_norm_keys
                     )
+                    replaced_count = exact_hits + norm_hits + substring_hits
                     if replaced_count > 0:
                         cell.value = replaced_text
-                        count += replaced_count
+                        stats['exact_hits'] += exact_hits
+                        stats['norm_hits'] += norm_hits
+                        stats['substring_hits'] += substring_hits
+                        stats['total_replacements'] += replaced_count
+                    elif unmatched_lines:
+                        stats['unmatched_cells'] += 1
+                        unmatched_cells.append(
+                            {
+                                'sheet': ws.title,
+                                'cell': cell.coordinate,
+                                'value': ' | '.join(unmatched_lines)[:500],
+                            }
+                        )
     wb.save(dst)
-    return count
+    return stats, unmatched_cells
+
+
+def write_reports(
+    output_dir: Path,
+    file_reports: list[dict[str, object]],
+    unmatched_details: list[dict[str, str]],
+) -> Path:
+    output_dir.mkdir(parents=True, exist_ok=True)
+    json_path = output_dir / REPLACEMENT_REPORT_JSON
+
+    total = {
+        'files': len(file_reports),
+        'exact_hits': 0,
+        'norm_hits': 0,
+        'substring_hits': 0,
+        'total_replacements': 0,
+        'unmatched_cells': 0,
+    }
+
+    def _to_int(value: object) -> int:
+        if isinstance(value, bool):
+            return int(value)
+        if isinstance(value, int):
+            return value
+        if isinstance(value, float):
+            return int(value)
+        if isinstance(value, str):
+            s = value.strip()
+            if not s:
+                return 0
+            try:
+                return int(float(s))
+            except ValueError:
+                return 0
+        return 0
+
+    for r in file_reports:
+        total['exact_hits'] += _to_int(r.get('exact_hits', 0))
+        total['norm_hits'] += _to_int(r.get('norm_hits', 0))
+        total['substring_hits'] += _to_int(r.get('substring_hits', 0))
+        total['total_replacements'] += _to_int(r.get('total_replacements', 0))
+        total['unmatched_cells'] += _to_int(r.get('unmatched_cells', 0))
+
+    payload = {
+        'summary': total,
+        'files': file_reports,
+        'unmatched_cells_preview_count': len(unmatched_details),
+    }
+    json_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    return json_path
+    report_json = write_reports(output_dir, file_reports, unmatched_details)
+    stale_md = output_dir / '未命中单元格.md'
+    if stale_md.exists() and stale_md.is_file():
+        stale_md.unlink()
 
 
 def main() -> None:
@@ -219,15 +308,54 @@ def main() -> None:
     print(f"发现 Excel 文件: {len(excel_files)} 个\n")
 
     total = 0
+    total_exact_hits = 0
+    total_norm_hits = 0
+    total_substring_hits = 0
+    total_unmatched_cells = 0
+    file_reports: list[dict[str, object]] = []
+    unmatched_details: list[dict[str, str]] = []
     for src in excel_files:
         relative_path = src.relative_to(source_root) if input_path.is_dir() else Path(src.name)
         dst = output_dir / relative_path
         dst.parent.mkdir(parents=True, exist_ok=True)
-        n = translate_workbook(src, dst, exact, norm, sorted_norm_keys)
+        stats, unmatched_cells = translate_workbook(src, dst, exact, norm, sorted_norm_keys)
+        n = int(stats['total_replacements'])
         total += n
-        print(f"  [{n:>4} 处替换]  {relative_path}")
+        total_exact_hits += int(stats['exact_hits'])
+        total_norm_hits += int(stats['norm_hits'])
+        total_substring_hits += int(stats['substring_hits'])
+        total_unmatched_cells += int(stats['unmatched_cells'])
 
-    print(f"\n完成！共替换 {total} 处，输出目录: {output_dir}")
+        file_reports.append(
+            {
+                'file': str(relative_path),
+                **stats,
+            }
+        )
+        for item in unmatched_cells:
+            unmatched_details.append(
+                {
+                    'file': str(relative_path),
+                    'sheet': item['sheet'],
+                    'cell': item['cell'],
+                    'value': item['value'],
+                }
+            )
+
+        print(
+            f"  [{n:>4} 处替换] {relative_path} "
+            f"(精确 {stats['exact_hits']}, 归一化 {stats['norm_hits']}, 子串 {stats['substring_hits']}, 未命中单元格 {stats['unmatched_cells']})"
+        )
+
+    report_json = write_reports(output_dir, file_reports, unmatched_details)
+
+    print(
+        f"\n完成！共替换 {total} 处 "
+        f"(精确 {total_exact_hits}, 归一化 {total_norm_hits}, 子串 {total_substring_hits})"
+    )
+    print(f"未命中单元格: {total_unmatched_cells} 个")
+    print(f"替换报告(JSON): {report_json}")
+    print(f"输出目录: {output_dir}")
 
 
 if __name__ == '__main__':

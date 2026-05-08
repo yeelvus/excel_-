@@ -5,17 +5,22 @@
 2. 未翻译的行 → 单独md文件
 """
 import json
+import csv
 import re
 import unicodedata
 import argparse
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
-FILTER_FILE = BASE_DIR / "2_提取文件合并文件" / "待翻译项.md"
+FILTER_FILE = BASE_DIR / "2_提取文件合并文件" / "待翻译项.csv"
 TRANSLATE_DIR = BASE_DIR / "3_翻译后文件"
 OUTPUT_DIR = BASE_DIR / "4_输出文件excel"
 
 JSON_PATH = BASE_DIR / "翻译对照.json"
+MANAGED_TRANS_GLOB = "翻译_第*部分.md"
+MANAGED_TRANS_CSV_GLOB = "翻译_第*部分.csv"
+ARCHIVE_DIR_NAME = "_归档_旧分片"
+CONFLICT_REPORT_NAME = "翻译冲突报告.md"
 
 
 def parse_args() -> argparse.Namespace:
@@ -25,7 +30,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--source-file",
         default=str(FILTER_FILE),
-        help="待匹配原文文件，默认使用 2_提取文件合并文件/待翻译项.md",
+        help="待匹配原文文件，默认使用 2_提取文件合并文件/待翻译项.csv",
     )
     parser.add_argument(
         "--translate-dir",
@@ -42,7 +47,23 @@ def parse_args() -> argparse.Namespace:
         default=str(OUTPUT_DIR),
         help="输出目录，用于保存未翻译行和json副本",
     )
+    parser.add_argument(
+        "--update-existing",
+        action="store_true",
+        help="当原文已存在于json且译文不同，使用本轮译文覆盖",
+    )
     return parser.parse_args()
+
+
+def _append_conflict(
+    bucket: dict[str, set[str]],
+    key: str,
+    old_val: str,
+    new_val: str,
+) -> None:
+    vals = bucket.setdefault(key, set())
+    vals.add(old_val)
+    vals.add(new_val)
 
 
 def parse_translation_file(path: Path) -> dict[str, str]:
@@ -84,9 +105,54 @@ def parse_translation_file(path: Path) -> dict[str, str]:
     return pairs
 
 
+def parse_translation_csv(path: Path) -> dict[str, str]:
+    """解析翻译CSV，返回 {原文: 译文}。"""
+    pairs: dict[str, str] = {}
+
+    def pick(row: dict[str, str], keys: list[str]) -> str:
+        for k in keys:
+            if k in row and str(row[k]).strip():
+                return str(row[k]).strip()
+        return ""
+
+    with path.open("r", encoding="utf-8-sig", newline="") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            original = pick(row, ["original", "原文", "source", "text"])
+            translation = pick(row, ["translation", "译文", "target", "translated"])
+            if original and translation and original != translation:
+                pairs[original] = translation
+    return pairs
+
+
+def load_source_lines(source_file: Path) -> list[str]:
+    """读取待匹配原文，支持csv/md/txt。"""
+    if source_file.suffix.lower() == ".csv":
+        lines: list[str] = []
+
+        def pick(row: dict[str, str], keys: list[str]) -> str:
+            for k in keys:
+                if k in row and str(row[k]).strip():
+                    return str(row[k]).strip()
+            return ""
+
+        with source_file.open("r", encoding="utf-8-sig", newline="") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                text = pick(row, ["original", "原文", "source", "text"])
+                if text:
+                    lines.append(text)
+        return lines
+
+    return [
+        ln.strip() for ln in source_file.read_text(encoding="utf-8").splitlines()
+        if ln.strip()
+    ]
+
+
 def normalize_for_match(text: str) -> str:
-    """NFC 归一化 + 折叠多余空格，消除泰语 Unicode 编码差异和多空格问题。"""
-    t = unicodedata.normalize("NFC", text.strip())
+    """NFKC 归一化 + 折叠多余空格，兼容泰语表现形式字符（如 ）差异。"""
+    t = unicodedata.normalize("NFKC", text.strip())
     t = re.sub(r"\s+", " ", t)
     return t
 
@@ -109,19 +175,37 @@ def load_existing_json(json_path: Path) -> list[dict]:
     return []
 
 
-def save_json_incremental(new_matched: list[dict], json_path: Path, output_dir: Path):
-    """增量保存：合并旧数据 + 新数据（去重）"""
+def save_json_incremental(
+    new_matched: list[dict],
+    json_path: Path,
+    output_dir: Path,
+    update_existing: bool,
+) -> tuple[int, int, dict[str, set[str]]]:
+    """增量保存：合并旧数据 + 新数据（去重），并返回新增/更新/冲突统计。"""
     existing = load_existing_json(json_path)
 
     # 用 (original) 作为唯一键，构建已有集合
     existing_dict = {item["original"]: item for item in existing}
 
     added_count = 0
+    updated_count = 0
+    conflicts: dict[str, set[str]] = {}
     for item in new_matched:
         orig = item["original"]
+        trans = item["translation"]
         if orig not in existing_dict:
             existing_dict[orig] = item
             added_count += 1
+            continue
+
+        old_trans = str(existing_dict[orig].get("translation", "")).strip()
+        if old_trans == trans:
+            continue
+
+        _append_conflict(conflicts, orig, old_trans, trans)
+        if update_existing:
+            existing_dict[orig] = {"original": orig, "translation": trans}
+            updated_count += 1
 
     final_list = list(existing_dict.values())
 
@@ -131,8 +215,33 @@ def save_json_incremental(new_matched: list[dict], json_path: Path, output_dir: 
         encoding="utf-8"
     )
 
-    print(f"✅ JSON增量更新完成！本次新增 {added_count} 条，总计 {len(final_list)} 条")
+    action_text = "覆盖已存在译文" if update_existing else "保留已存在译文"
+    print(
+        f"✅ JSON增量更新完成！本次新增 {added_count} 条，更新 {updated_count} 条，"
+        f"冲突 {len(conflicts)} 条（策略：{action_text}），总计 {len(final_list)} 条"
+    )
     print(f"翻译JSON: {json_path}")
+    return added_count, updated_count, conflicts
+
+
+def save_conflict_report(conflicts: dict[str, set[str]], output_dir: Path) -> Path:
+    output_dir.mkdir(parents=True, exist_ok=True)
+    report_path = output_dir / CONFLICT_REPORT_NAME
+    if not conflicts:
+        report_path.write_text("无冲突。\n", encoding="utf-8")
+        return report_path
+
+    lines: list[str] = [f"冲突原文条数: {len(conflicts)}", ""]
+    for i, (orig, trans_set) in enumerate(sorted(conflicts.items()), start=1):
+        lines.append(f"## {i}. 原文")
+        lines.append(orig)
+        lines.append("- 候选译文:")
+        for t in sorted(trans_set):
+            lines.append(f"  - {t}")
+        lines.append("")
+
+    report_path.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
+    return report_path
 
 
 def main() -> None:
@@ -151,17 +260,33 @@ def main() -> None:
         print(f"❌ 翻译文件夹不存在: {translate_dir}")
         return
 
-    source_lines = [
-        ln.strip() for ln in source_file.read_text(encoding="utf-8").splitlines()
-        if ln.strip()
-    ]
+    source_lines = load_source_lines(source_file)
     print(f"原始待匹配文本共 {len(source_lines)} 行\n")
 
-    # 解析所有翻译文件
+    # 解析翻译文件：优先CSV分片，其次MD分片，最后回退同目录全部同类文件
     all_pairs: dict[str, str] = {}
-    trans_files = sorted(translate_dir.glob("*.md"))
+    trans_csv_files = sorted(translate_dir.glob(MANAGED_TRANS_CSV_GLOB))
+    trans_md_files = sorted(translate_dir.glob(MANAGED_TRANS_GLOB))
+    if not trans_csv_files:
+        trans_csv_files = sorted(
+            p for p in translate_dir.glob("*.csv")
+            if p.parent.name != ARCHIVE_DIR_NAME
+        )
+    if not trans_md_files:
+        trans_md_files = sorted(
+            p for p in translate_dir.glob("*.md")
+            if p.parent.name != ARCHIVE_DIR_NAME
+        )
+
+    trans_files = trans_csv_files + trans_md_files
+    if not trans_files:
+        print("未找到可解析的翻译文件（csv/md）")
+
     for tf in trans_files:
-        pairs = parse_translation_file(tf)
+        if tf.suffix.lower() == ".csv":
+            pairs = parse_translation_csv(tf)
+        else:
+            pairs = parse_translation_file(tf)
         print(f" {tf.name}: {len(pairs)} 对翻译")
         all_pairs.update(pairs)
 
@@ -188,7 +313,14 @@ def main() -> None:
         unmatched.append(line)
 
     # 增量保存JSON
-    save_json_incremental(matched, json_path, output_dir)
+    _, _, conflicts = save_json_incremental(
+        matched,
+        json_path,
+        output_dir,
+        update_existing=args.update_existing,
+    )
+
+    conflict_report = save_conflict_report(conflicts, output_dir)
 
     # 保存未翻译行
     unmatched_path = output_dir / "未翻译行.md"
@@ -198,6 +330,7 @@ def main() -> None:
     print(f"匹配成功: {len(matched)} 行")
     print(f"未翻译: {len(unmatched)} 行")
     print(f"未翻译行 → {unmatched_path}")
+    print(f"冲突报告 → {conflict_report}")
 
 
 if __name__ == "__main__":

@@ -2,7 +2,9 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import json
+import unicodedata
 from decimal import Decimal
 from pathlib import Path
 import re
@@ -137,6 +139,79 @@ TRANSLATION_JSON_CANDIDATES = [
     BASE_DIR / "翻译对照.json",
     BASE_DIR / "4_输出文件excel" / "翻译对照.json",
 ]
+MANAGED_MERGE_FILES = {
+    "合并文本.md",
+    "过滤后文本.md",
+    "剔除_纯中文.md",
+    "剔除_数字单位代码等.md",
+    "分类_泰文.md",
+    "分类_英文.md",
+    "分类_中文.md",
+    "待翻译项.md",
+    "待翻译项.csv",
+    "待翻译_泰文.md",
+    "待翻译_泰文.csv",
+    "待翻译_英文.md",
+    "待翻译_英文.csv",
+}
+
+
+def cleanup_output_md_files() -> int:
+    """清理上一轮提取生成的md，避免目录持续堆积。"""
+    removed = 0
+    if not OUTPUT_DIR.exists():
+        return removed
+    for md in OUTPUT_DIR.glob("*.md"):
+        try:
+            md.unlink()
+            removed += 1
+        except OSError as exc:
+            print(f"⚠️ 删除旧文件失败: {md.name} ({exc})")
+    return removed
+
+
+def cleanup_merge_generated_files() -> int:
+    """清理 2_提取文件合并文件 下历史生成文件，避免旧产物干扰本轮结果。"""
+    removed = 0
+    if not MERGE_DIR.exists():
+        return removed
+    for name in MANAGED_MERGE_FILES:
+        fp = MERGE_DIR / name
+        if fp.exists():
+            fp.unlink(missing_ok=True)
+            removed += 1
+    return removed
+
+
+def prune_translated_lines_in_md(
+    md_path: Path,
+    exact_originals: set[str],
+    normalized_originals: set[str],
+) -> tuple[int, int, bool]:
+    """删除md中已在翻译对照中的行；若删空则删除文件。"""
+    if not md_path.exists():
+        return 0, 0, False
+
+    raw_lines = md_path.read_text(encoding="utf-8").splitlines()
+    kept: list[str] = []
+    removed = 0
+
+    for line in raw_lines:
+        stripped = line.strip()
+        if not stripped:
+            continue
+        normalized_line = normalize_match_text(stripped)
+        if stripped in exact_originals or normalized_line in normalized_originals:
+            removed += 1
+            continue
+        kept.append(stripped)
+
+    if kept:
+        md_path.write_text("\n".join(kept) + "\n", encoding="utf-8")
+        return len(raw_lines), removed, False
+
+    md_path.unlink(missing_ok=True)
+    return len(raw_lines), removed, True
 
 # ── 智能过滤正则 ──
 CHINESE_RE = re.compile(r"[\u4e00-\u9fff]")
@@ -242,8 +317,25 @@ def main() -> None:
         return
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    cleaned_files = cleanup_output_md_files()
+    if cleaned_files:
+        print(f"已清理旧提取文件: {cleaned_files} 个")
+
+    cleaned_merge = cleanup_merge_generated_files()
+    if cleaned_merge:
+        print(f"已清理旧合并产物: {cleaned_merge} 个")
+
+    translation_json_path = find_translation_json_path()
+    exact_originals, normalized_originals = load_translation_originals(translation_json_path)
+    if exact_originals or normalized_originals:
+        print(f"已加载翻译对照用于整理: {translation_json_path} ({len(exact_originals)} 条原文)")
+    else:
+        print(f"未加载到翻译对照（将保留全部提取结果）: {translation_json_path}")
+
     total_files = len(excel_files)
     total_lines = 0
+    total_removed_lines = 0
+    removed_md_files = 0
 
     print(f"找到 {total_files} 个Excel文件，输出目录: {OUTPUT_DIR}\n")
 
@@ -264,12 +356,33 @@ def main() -> None:
                 with_sheet_header=args.with_sheet_header,
                 dedupe_text=not args.no_dedupe,
             )
-            total_lines += lines
-            print(f"[{i}/{total_files}] {excel_path.name} → {md_name} ({lines} 行)")
+            original_count, removed_count, file_deleted = prune_translated_lines_in_md(
+                md_path=md_path,
+                exact_originals=exact_originals,
+                normalized_originals=normalized_originals,
+            )
+            kept_count = max(original_count - removed_count, 0)
+            total_lines += kept_count
+            total_removed_lines += removed_count
+            if file_deleted:
+                removed_md_files += 1
+                print(
+                    f"[{i}/{total_files}] {excel_path.name} → {md_name} "
+                    f"(原始 {original_count} 行, 删除已翻译 {removed_count} 行, 文件已移除)"
+                )
+            else:
+                print(
+                    f"[{i}/{total_files}] {excel_path.name} → {md_name} "
+                    f"(原始 {original_count} 行, 删除已翻译 {removed_count} 行, 保留 {kept_count} 行)"
+                )
         except Exception as e:
             print(f"[{i}/{total_files}] {excel_path.name} 失败: {e}")
 
-    print(f"\n完成！共处理 {total_files} 个文件，提取 {total_lines} 行文本到 {OUTPUT_DIR}")
+    print(
+        f"\n完成！共处理 {total_files} 个文件，保留 {total_lines} 行待处理文本，"
+        f"删除已翻译 {total_removed_lines} 行，移除空文件 {removed_md_files} 个"
+    )
+    print(f"输出目录: {OUTPUT_DIR}")
 
     # 合并所有md文件并去重
     merge_md_files()
@@ -309,6 +422,7 @@ def merge_md_files() -> None:
 
 def normalize_match_text(text: str) -> str:
     text = text.strip()
+    text = unicodedata.normalize("NFKC", text)
     text = re.sub(r"\s+", " ", text)
     return text
 
@@ -346,11 +460,21 @@ def load_translation_originals(json_path: Path) -> tuple[set[str], set[str]]:
 
 def export_pending_translation_items(filtered_lines: list[str]) -> None:
     pending_path = MERGE_DIR / "待翻译项.md"
+    pending_csv_path = MERGE_DIR / "待翻译项.csv"
+
+    def write_pending_csv(csv_path: Path, lines: list[str]) -> None:
+        with csv_path.open("w", encoding="utf-8", newline="") as f:
+            writer = csv.writer(f)
+            writer.writerow(["id", "original", "translation"])
+            for idx, text in enumerate(lines, start=1):
+                writer.writerow([idx, text, ""])
 
     if not filtered_lines:
         pending_path.write_text("", encoding="utf-8")
+        write_pending_csv(pending_csv_path, [])
         print("待翻译项: 0 行")
         print(f"输出: {pending_path}")
+        print(f"输出: {pending_csv_path}")
         return
 
     translation_json_path = find_translation_json_path()
@@ -367,13 +491,17 @@ def export_pending_translation_items(filtered_lines: list[str]) -> None:
             pending_lines.append(line)
 
     pending_path.write_text("\n".join(pending_lines) + ("\n" if pending_lines else ""), encoding="utf-8")
+    write_pending_csv(pending_csv_path, pending_lines)
     print(f"待翻译项: {len(pending_lines)} 行")
     print(f"输出: {pending_path}")
+    print(f"输出: {pending_csv_path}")
 
     # 待翻译项按语言分类，方便选择性翻译
     thai_pending, english_pending = _split_by_language(pending_lines)
     (MERGE_DIR / "待翻译_泰文.md").write_text("\n".join(thai_pending) + "\n", encoding="utf-8")
     (MERGE_DIR / "待翻译_英文.md").write_text("\n".join(english_pending) + "\n", encoding="utf-8")
+    write_pending_csv(MERGE_DIR / "待翻译_泰文.csv", thai_pending)
+    write_pending_csv(MERGE_DIR / "待翻译_英文.csv", english_pending)
     print(f"  待翻译分类: 泰文 {len(thai_pending)} 行 → 待翻译_泰文.md, 英文 {len(english_pending)} 行 → 待翻译_英文.md")
 
 

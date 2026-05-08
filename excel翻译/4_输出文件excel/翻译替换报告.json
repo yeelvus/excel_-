@@ -1,0 +1,21 @@
+{
+  "summary": {
+    "files": 1,
+    "exact_hits": 1390,
+    "norm_hits": 2,
+    "substring_hits": 0,
+    "total_replacements": 1392,
+    "unmatched_cells": 2479
+  },
+  "files": [
+    {
+      "file": "BOQ-FUR...(1).xlsx",
+      "exact_hits": 1390,
+      "norm_hits": 2,
+      "substring_hits": 0,
+      "total_replacements": 1392,
+      "unmatched_cells": 2479
+    }
+  ],
+  "unmatched_cells_preview_count": 2479
+}
