@@ -33,6 +33,17 @@ JSON_CANDIDATES = [
 ]
 DXF_SUFFIXES = {".dxf"}
 EXCEL_OUTPUT = BASE_DIR / "1_提取文本" / "文字提取翻译表.xlsx"
+FILTER_CONFIG_PATH = BASE_DIR / "cad_text_filter_config.json"
+DEFAULT_FILTER_CONFIG = {
+    "allow_exact": [],
+    "allow_contains": [],
+    "allow_regex": [],
+    "ignore_exact": [],
+    "ignore_contains": [],
+    "ignore_prefixes": [],
+    "ignore_suffixes": [],
+    "ignore_regex": [],
+}
 
 # ==================== 正则 ====================
 _MD_PATH_STRIP_RE = re.compile(r"^[\-\*\d\.)\s]*")
@@ -70,6 +81,20 @@ ARROW_MARK_RE = re.compile(r"^Arrow_\d+$", re.IGNORECASE)
 GROUP_SPLIT_RE = re.compile(r"[;；|｜、，]+|\s{2,}|\s/\s")
 STAR_X_RE = re.compile(r"^\*X\d+$")
 EXCEL_ILLEGAL_CHAR_RE = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f]")
+ENGLISH_SENTENCE_HINT_RE = re.compile(
+    r"\b(?:shall|must|should|required|require|provide|install|construct|connect|"
+    r"refer|see|note|warning|caution|do not|not less than|all|contractor|"
+    r"dimension|dimensions|material|materials|specified|according|existing|proposed)\b",
+    re.IGNORECASE,
+)
+ENGLISH_LABEL_RE = re.compile(
+    r"^(?:[A-Z0-9()/.&+-]+\s+){0,6}"
+    r"(?:SYSTEM|LAYOUT|PLAN|PROFILE|SECTION|DETAIL|LOCATION|KEY PLAN|"
+    r"TITLE|DRAWING|SHEET|PHASE|ROAD|COMPANY LIMITED|PUBLIC COMPANY LIMITED)\.?$",
+    re.IGNORECASE,
+)
+ROAD_LABEL_RE = re.compile(r"^(?:ROAD|LINE|PHASE|ZONE|AREA)\s+[A-Z0-9/._-]+$", re.IGNORECASE)
+COMPANY_LABEL_RE = re.compile(r"\b(?:CO\.,?\s*LTD\.?|LTD\.?|PUBLIC COMPANY LIMITED|COMPANY LIMITED)\b", re.IGNORECASE)
 
 def normalize_text(text: str) -> str:
     return re.sub(r"\s+", " ", text.strip())
@@ -79,6 +104,108 @@ def sanitize_excel_text(text: str) -> str:
     if len(cleaned) > 32767:
         cleaned = cleaned[:32767]
     return cleaned
+
+def load_filter_config(path: Path) -> dict:
+    if not path.exists():
+        return DEFAULT_FILTER_CONFIG.copy()
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        raise SystemExit(f"过滤配置不是有效JSON: {path}\n{exc}") from exc
+    config = DEFAULT_FILTER_CONFIG.copy()
+    if isinstance(data, dict):
+        for key in config:
+            value = data.get(key, [])
+            config[key] = value if isinstance(value, list) else []
+    return config
+
+def is_allowed_by_config(text: str, config: dict) -> bool:
+    folded = text.casefold()
+
+    for item in config.get("allow_exact", []):
+        if folded == str(item).strip().casefold():
+            return True
+    for item in config.get("allow_contains", []):
+        token = str(item).strip()
+        if token and token.casefold() in folded:
+            return True
+    for pattern in config.get("allow_regex", []):
+        if re.search(str(pattern), text, flags=re.IGNORECASE):
+            return True
+    return False
+
+def is_ignored_by_config(text: str, config: dict) -> bool:
+    folded = text.casefold()
+
+    for item in config.get("ignore_exact", []):
+        if folded == str(item).strip().casefold():
+            return True
+    for item in config.get("ignore_contains", []):
+        token = str(item).strip()
+        if token and token.casefold() in folded:
+            return True
+    for item in config.get("ignore_prefixes", []):
+        token = str(item).strip()
+        if token and folded.startswith(token.casefold()):
+            return True
+    for item in config.get("ignore_suffixes", []):
+        token = str(item).strip()
+        if token and folded.endswith(token.casefold()):
+            return True
+    for pattern in config.get("ignore_regex", []):
+        if re.search(str(pattern), text, flags=re.IGNORECASE):
+            return True
+    return False
+
+def looks_like_english_label(text: str) -> bool:
+    words = re.findall(r"[A-Za-z]+", text)
+    if not words:
+        return False
+    if ENGLISH_LABEL_RE.fullmatch(text) or ROAD_LABEL_RE.fullmatch(text):
+        return True
+    if COMPANY_LABEL_RE.search(text):
+        return True
+    alpha_chars = "".join(ch for ch in text if ch.isalpha())
+    is_all_caps = bool(alpha_chars) and alpha_chars.upper() == alpha_chars
+    if is_all_caps and len(words) <= 5 and not re.search(r"[.!?;:]$", text):
+        return True
+    return False
+
+def is_meaningful_english_text(text: str) -> bool:
+    words = re.findall(r"[A-Za-z]+", text)
+    if len(words) < 3:
+        return False
+    if looks_like_english_label(text):
+        return False
+    if ENGLISH_SENTENCE_HINT_RE.search(text):
+        return True
+    if re.search(r"[.!?;:]$", text) and len(words) >= 4:
+        return True
+    has_lower = any(ch.islower() for ch in text)
+    if has_lower and len(words) >= 5:
+        return True
+    return False
+
+def should_extract_text(text: str, *, include_english: bool, filter_config: dict) -> bool:
+    if CAD_META_RE.match(text):
+        return False
+    if is_noise_line(text):
+        return False
+    if is_low_value_translation_text(text):
+        return False
+    if not is_readable_text_any(text):
+        return False
+    if is_allowed_by_config(text, filter_config):
+        return True
+    if is_ignored_by_config(text, filter_config):
+        return False
+
+    has_thai = THAI_RE.search(text)
+    has_chinese = CHINESE_RE.search(text)
+    if has_thai or has_chinese:
+        return True
+
+    return bool(include_english and is_meaningful_english_text(text))
 
 def is_noise_line(text: str) -> bool:
     compact = text.strip()
@@ -288,7 +415,14 @@ def _load_excel_translations(excel_path: Path) -> dict[tuple[str, str], str]:
     wb.close()
     return data
 
-def extract_all_texts_to_excel(dxf_files: list[Path], excel_path: Path) -> tuple[int, int]:
+def extract_all_texts_to_excel(
+    dxf_files: list[Path],
+    excel_path: Path,
+    *,
+    include_english: bool = False,
+    dedupe: bool = True,
+    filter_config: dict | None = None,
+) -> tuple[int, int]:
     if not _HAS_OPENPYXL:
         raise SystemExit("未安装 openpyxl，请执行: pip install openpyxl")
     existing = _load_excel_translations(excel_path)
@@ -313,6 +447,7 @@ def extract_all_texts_to_excel(dxf_files: list[Path], excel_path: Path) -> tuple
     total = 0
     translated = 0
     total_files = len(dxf_files)
+    filter_config = filter_config or DEFAULT_FILTER_CONFIG.copy()
     for idx, dxf_path in enumerate(dxf_files, start=1):
         try:
             doc = ezdxf.readfile(dxf_path)
@@ -328,15 +463,13 @@ def extract_all_texts_to_excel(dxf_files: list[Path], excel_path: Path) -> tuple
                     norm = normalize_text(piece)
                     if not norm:
                         continue
-                    if CAD_META_RE.match(norm):
+                    if not should_extract_text(
+                        norm,
+                        include_english=include_english,
+                        filter_config=filter_config,
+                    ):
                         continue
-                    if is_noise_line(norm):
-                        continue
-                    if is_low_value_translation_text(norm):
-                        continue
-                    if not is_readable_text_any(norm):
-                        continue
-                    if norm in seen_in_file:
+                    if dedupe and norm in seen_in_file:
                         continue
                     seen_in_file.add(norm)
                     key = (str(dxf_path), norm)
@@ -366,10 +499,11 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="提取CAD(DXF)中的泰文文本，生成待翻译项")
     parser.add_argument("input_path", nargs="?", default=str(INPUT_DIR), help="待处理DXF文件或目录")
     parser.add_argument("--no-dedupe", action="store_true", help="保留重复行")
-    parser.add_argument("--include-english", action="store_true", help="额外包含英文字段")
-    parser.add_argument("--thai-cn-only", action="store_true", help="仅保留中文/泰文")
+    parser.add_argument("--include-english", action="store_true", help="兼容旧参数：默认已提取有翻译价值的英文句子")
+    parser.add_argument("--thai-cn-only", action="store_true", help="仅保留中文/泰文，不提取英文句子")
     parser.add_argument("--no-trad-to-simp", action="store_true", help="关闭繁体转简体")
     parser.add_argument("--no-excel-output", action="store_true", help="关闭Excel输出")
+    parser.add_argument("--filter-config", default=str(FILTER_CONFIG_PATH), help="不需要翻译文本的过滤配置JSON")
     return parser.parse_args()
 
 def main() -> None:
@@ -384,7 +518,14 @@ def main() -> None:
         excel_path = EXCEL_OUTPUT
         if _HAS_OPENPYXL:
             print("开始提取并写入Excel，请稍候（会周期输出进度）...")
-            total, translated = extract_all_texts_to_excel(files, excel_path)
+            filter_config = load_filter_config(Path(args.filter_config).expanduser().resolve())
+            total, translated = extract_all_texts_to_excel(
+                files,
+                excel_path,
+                include_english=not args.thai_cn_only,
+                dedupe=not args.no_dedupe,
+                filter_config=filter_config,
+            )
             print(f"✅ Excel已输出: {excel_path}")
             print(f"提取条数: {total}，已有译文: {translated}")
         else:
