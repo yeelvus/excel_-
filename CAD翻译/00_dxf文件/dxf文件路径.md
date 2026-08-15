@@ -1,1 +1,0 @@
-'/Volumes/PC-SunYongtao/工作临时文件存放包/3.任务文件明细/项目成本测算任务/投标项目-CBCS2026052001-AMATA CITY RAYONG INDUSTRIAL ESTATE PHASE 5B Road M6/A前期资料/A.1.招标文件/泰国AMATA园区道路项目dxf'
